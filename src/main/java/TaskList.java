@@ -18,12 +18,12 @@ class TaskList {
         this.addTask(newTask);
     }
 
-    // taskNumber is 1-indexes
+    // taskNumber is 1-indexed
     public void markAsDone(int taskNumber) {
         this.taskList.get(taskNumber - 1).markAsDone();
     }
 
-    // taskNumber is 1-indexes
+    // taskNumber is 1-indexed
     public void markAsUndone(int taskNumber) {
         this.taskList.get(taskNumber - 1).unmarkAsDone();
     }
