@@ -1,5 +1,6 @@
-Hello
-How are you doing today?
-It is a nice day
-Bye!
+read book
+return book
+Watch Movie
+play Game
+list
 bye

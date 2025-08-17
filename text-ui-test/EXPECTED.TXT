@@ -2,16 +2,22 @@ Hello! I'm Chalk
 What can I do for you?
 -------------------------------
 -------------------------------
-Chalk: Hello
+added: read book
 -------------------------------
 -------------------------------
-Chalk: How are you doing today?
+added: return book
 -------------------------------
 -------------------------------
-Chalk: It is a nice day
+added: Watch Movie
 -------------------------------
 -------------------------------
-Chalk: Bye!
+added: play Game
+-------------------------------
+-------------------------------
+1. read book
+2. return book
+3. Watch Movie
+4. play Game
 -------------------------------
 -------------------------------
 Bye. Hope to see you again soon!
