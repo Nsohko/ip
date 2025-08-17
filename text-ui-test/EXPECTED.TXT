@@ -9,16 +9,46 @@
     added: return book
 -------------------------------
 -------------------------------
-    added: Watch Movie
+    added: buy bread
 -------------------------------
 -------------------------------
-    added: play Game
+    added: play game
 -------------------------------
 -------------------------------
     1. [ ] read book
     2. [ ] return book
-    3. [ ] Watch Movie
-    4. [ ] play Game
+    3. [ ] buy bread
+    4. [ ] play game
+-------------------------------
+-------------------------------
+    Nice! I've marked this task as done:
+        [X] return book
+-------------------------------
+-------------------------------
+    Nice! I've marked this task as done:
+        [X] buy bread
+-------------------------------
+-------------------------------
+    1. [ ] read book
+    2. [X] return book
+    3. [X] buy bread
+    4. [ ] play game
+-------------------------------
+-------------------------------
+    OK, I've marked this task as not done yet:
+        [ ] return book
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
+    1. [ ] read book
+    2. [ ] return book
+    3. [X] buy bread
+    4. [ ] play game
 -------------------------------
 -------------------------------
     Bye. Hope to see you again soon!

@@ -19,16 +19,24 @@ class TaskList {
     }
 
     // taskNumber is 1-indexed
-    public void markAsDone(int taskNumber) {
-        this.taskList.get(taskNumber - 1).markAsDone();
+    public Task markAsDone(int taskNumber) {
+        Task task = this.taskList.get(taskNumber - 1);
+        task.markAsDone();
+        return task;
     }
 
     // taskNumber is 1-indexed
-    public void markAsUndone(int taskNumber) {
-        this.taskList.get(taskNumber - 1).unmarkAsDone();
+    public Task unmarkAsDone(int taskNumber) {
+        Task task = this.taskList.get(taskNumber - 1);
+        task.unmarkAsDone();
+        return task;
     }
 
-    // Override
+    public int size() {
+        return this.taskList.size();
+    }
+
+    @Override
     public String toString() {
         String res = "";
 

@@ -7,6 +7,8 @@ public class Chalk {
 
     private static final String END_CONVERSATION = "bye";
     private static final String LIST_TASKS = "list";
+    private static final String MARK_TASK_AS_DONE = "mark \\d+"; // matches string that starts with "mark " and has one or more digits after
+    private static final String UNMARK_TASK_AS_DONE = "unmark \\d+"; // matches string that starts with "unmark " and has one or more digits after
 
     private TaskList taskList;
 
@@ -15,9 +17,10 @@ public class Chalk {
     }
 
     public void initialize() {
-        String message = "Hello! I'm "
-                + Chalk.NAME + "\n"
-                + "What can I do for you?";
+        String message = """
+            Hello! I'm %s
+            What can I do for you?
+            """.formatted(Chalk.NAME);
 
         this.say(message);
     }
@@ -42,13 +45,51 @@ public class Chalk {
         System.out.println(lineBreak);
     }
 
-    public void say() {
+    public void listTaks() {
         this.say(this.taskList.toString());
     }
 
     public void addTask(String taskName) {
         this.say("added: " + taskName);
         this.taskList.addTask(taskName);
+    }
+
+    public void markAsDone(String commmand) {
+        // taskNumber is 1-indexed
+        int taskNumber = Integer.parseInt(commmand.split(" ")[1]);
+        if (taskNumber >= this.taskList.size()) {
+            String errorMessage = "Error! There is no task with that number!";
+            this.say(errorMessage);
+            return;
+        }
+
+        Task task = this.taskList.markAsDone(taskNumber);
+
+        String message = """
+            Nice! I've marked this task as done:
+                %s
+            """.formatted(task.toString());
+
+        this.say(message);
+    }
+
+    public void markAsUndone(String commmand) {
+        // taskNumber is 1-indexed
+        int taskNumber = Integer.parseInt(commmand.split(" ")[1]);
+        if (taskNumber >= this.taskList.size()) {
+            String errorMessage = "Error! There is no task with that number!";
+            this.say(errorMessage);
+            return;
+        }
+
+        Task task = this.taskList.unmarkAsDone(taskNumber);
+
+        String message = """
+            OK, I've marked this task as not done yet:
+                %s
+            """.formatted(task.toString());
+
+        this.say(message);
     }
 
     public static void main(String[] args) {
@@ -66,11 +107,14 @@ public class Chalk {
             if (userInput.equals(END_CONVERSATION)) {
                 break;
             } else if (userInput.equals(LIST_TASKS)) {
-                chalk.say();
-                continue;
+                chalk.listTaks();
+            } else if (userInput.matches(MARK_TASK_AS_DONE)) {
+                chalk.markAsDone(userInput);
+            } else if (userInput.matches(UNMARK_TASK_AS_DONE)) {
+                chalk.markAsUndone(userInput);
+            } else {
+                chalk.addTask(userInput);
             }
-
-            chalk.addTask(userInput);
         }
         chalk.terminate();
     }
