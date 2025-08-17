@@ -1,24 +1,24 @@
-Hello! I'm Chalk
-What can I do for you?
+    Hello! I'm Chalk
+    What can I do for you?
 -------------------------------
 -------------------------------
-added: read book
+    added: read book
 -------------------------------
 -------------------------------
-added: return book
+    added: return book
 -------------------------------
 -------------------------------
-added: Watch Movie
+    added: Watch Movie
 -------------------------------
 -------------------------------
-added: play Game
+    added: play Game
 -------------------------------
 -------------------------------
-1. read book
-2. return book
-3. Watch Movie
-4. play Game
+    1. read book
+    2. return book
+    3. Watch Movie
+    4. play Game
 -------------------------------
 -------------------------------
-Bye. Hope to see you again soon!
+    Bye. Hope to see you again soon!
 -------------------------------

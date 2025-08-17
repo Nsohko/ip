@@ -13,8 +13,8 @@ public class Chalk {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello! I'm " + Chalk.NAME);
-        System.out.println("What can I do for you?");
+        Chalk.say("Hello! I'm " + Chalk.NAME);
+        Chalk.say("What can I do for you?");
         System.out.println(Chalk.LINE_BREAK);
 
         Scanner scanner = new Scanner(System.in);
@@ -23,24 +23,31 @@ public class Chalk {
 
         while (true) {
             userInput = scanner.nextLine();
-            System.out.println(Chalk.LINE_BREAK);
 
             if (userInput.equals(END_CONVERSATION)) {
                 break;
             } else if (userInput.equals(LIST_TASKS)) {
+                System.out.println(Chalk.LINE_BREAK);
                 for (int i = 0; i < storedInputs.size(); i++) {
-                    System.out.println((i + 1) + ". " + storedInputs.get(i));
+                    Chalk.say((i + 1) + ". " + storedInputs.get(i));
                 }
                 System.out.println(Chalk.LINE_BREAK);
                 continue;
             }
 
-            System.out.println("added: " + userInput);
-            storedInputs.add(userInput);
             System.out.println(Chalk.LINE_BREAK);
+            Chalk.say("added: " + userInput);
+            System.out.println(Chalk.LINE_BREAK);
+            storedInputs.add(userInput);
         }
-        System.out.println("Bye. Hope to see you again soon!");
+
+        System.out.println(Chalk.LINE_BREAK);
+        Chalk.say("Bye. Hope to see you again soon!");
         System.out.println(Chalk.LINE_BREAK);
         scanner.close();
+    }
+
+    private static void say(String sentenceString) {
+        System.out.println("    " + sentenceString);
     }
 }
