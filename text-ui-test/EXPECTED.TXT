@@ -14,10 +14,10 @@
     added: play Game
 -------------------------------
 -------------------------------
-    1. read book
-    2. return book
-    3. Watch Movie
-    4. play Game
+    1. [ ] read book
+    2. [ ] return book
+    3. [ ] Watch Movie
+    4. [ ] play Game
 -------------------------------
 -------------------------------
     Bye. Hope to see you again soon!

@@ -1,5 +1,4 @@
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Chalk {
@@ -19,7 +18,7 @@ public class Chalk {
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
-        ArrayList<String> storedInputs = new ArrayList<>();
+        TaskList taskList = new TaskList();
 
         while (true) {
             userInput = scanner.nextLine();
@@ -28,9 +27,7 @@ public class Chalk {
                 break;
             } else if (userInput.equals(LIST_TASKS)) {
                 System.out.println(Chalk.LINE_BREAK);
-                for (int i = 0; i < storedInputs.size(); i++) {
-                    Chalk.say((i + 1) + ". " + storedInputs.get(i));
-                }
+                Chalk.say(taskList.toString());
                 System.out.println(Chalk.LINE_BREAK);
                 continue;
             }
@@ -38,7 +35,7 @@ public class Chalk {
             System.out.println(Chalk.LINE_BREAK);
             Chalk.say("added: " + userInput);
             System.out.println(Chalk.LINE_BREAK);
-            storedInputs.add(userInput);
+            taskList.addTask(userInput);
         }
 
         System.out.println(Chalk.LINE_BREAK);
@@ -48,6 +45,12 @@ public class Chalk {
     }
 
     private static void say(String sentenceString) {
-        System.out.println("    " + sentenceString);
+        // split each line based on new line character, then prepend 4 spaces
+        // not the best solution, because it doesnt account for when long lines wrap around
+        // but it will do for now
+        for (String line : sentenceString.split("\n")) {
+            System.out.println("    " + line);
+        }
     }
+
 }
