@@ -1,13 +1,17 @@
-read book
-return book
-buy bread
-play game
+todo read book
+deadline return book /by June 6th
+event project meeting /from Aug 6th 2pm /to 4pm
+todo join sports club
 list
-mark 2
+mark 1
 mark 3
+todo borrow book
 list
-unmark 2
-mark 5
-unmark 23
+deadline buy groceries /by Sunday
+event cs2102 group meeting /from Mon 2pm /to 4pm
+list
+unmark 1
+mark 7
+unmark 3
 list
 bye

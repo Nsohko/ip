@@ -14,11 +14,6 @@ public class TaskList {
         this.taskList.add(t);
     }
 
-    public void addTask(String taskName) {
-        Task newTask = new Task(taskName);
-        this.addTask(newTask);
-    }
-
     // taskNumber is 1-indexed
     public Task markAsDone(int taskNumber) {
         Task task = this.taskList.get(taskNumber - 1);

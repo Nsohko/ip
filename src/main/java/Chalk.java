@@ -51,15 +51,22 @@ public class Chalk {
         this.say(this.taskList.toString());
     }
 
-    public void addTask(String taskName) {
-        this.say("added: " + taskName);
-        this.taskList.addTask(taskName);
+    public void addTask(String command) {
+        Task newTask = Task.fromCommand(command);
+        this.taskList.addTask(newTask);
+
+        String message = """
+                Got it. I've added this task:
+                    %s
+                Now you have %d tasks in the list.
+                """.formatted(newTask.toString(), this.taskList.size());
+        this.say(message);
     }
 
     public void markAsDone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
-        if (taskNumber >= this.taskList.size()) {
+        if (taskNumber > this.taskList.size()) {
             String errorMessage = "Error! There is no task with that number!";
             this.say(errorMessage);
             return;
