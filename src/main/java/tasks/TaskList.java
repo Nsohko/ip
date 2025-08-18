@@ -1,7 +1,8 @@
+package tasks;
 
 import java.util.ArrayList;
 
-class TaskList {
+public class TaskList {
 
     private final ArrayList<Task> taskList;
 

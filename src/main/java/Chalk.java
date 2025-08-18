@@ -1,5 +1,7 @@
 
 import java.util.Scanner;
+import tasks.Task;
+import tasks.TaskList;
 
 public class Chalk {
 
@@ -10,7 +12,7 @@ public class Chalk {
     private static final String MARK_TASK_AS_DONE = "mark \\d+"; // matches string that starts with "mark " and has one or more digits after
     private static final String UNMARK_TASK_AS_DONE = "unmark \\d+"; // matches string that starts with "unmark " and has one or more digits after
 
-    private TaskList taskList;
+    private final TaskList taskList;
 
     public Chalk() {
         this.taskList = new TaskList();
@@ -54,9 +56,9 @@ public class Chalk {
         this.taskList.addTask(taskName);
     }
 
-    public void markAsDone(String commmand) {
+    public void markAsDone(String command) {
         // taskNumber is 1-indexed
-        int taskNumber = Integer.parseInt(commmand.split(" ")[1]);
+        int taskNumber = Integer.parseInt(command.split(" ")[1]);
         if (taskNumber >= this.taskList.size()) {
             String errorMessage = "Error! There is no task with that number!";
             this.say(errorMessage);
@@ -73,9 +75,9 @@ public class Chalk {
         this.say(message);
     }
 
-    public void markAsUndone(String commmand) {
+    public void markAsUndone(String command) {
         // taskNumber is 1-indexed
-        int taskNumber = Integer.parseInt(commmand.split(" ")[1]);
+        int taskNumber = Integer.parseInt(command.split(" ")[1]);
         if (taskNumber >= this.taskList.size()) {
             String errorMessage = "Error! There is no task with that number!";
             this.say(errorMessage);
