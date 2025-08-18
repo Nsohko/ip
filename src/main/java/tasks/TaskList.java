@@ -34,6 +34,16 @@ public class TaskList {
         return task;
     }
 
+    // taskNumber is 1-indexed
+    public Task deleteTask (int taskNumber) throws IndexOutOfBoundsException {
+        if (taskNumber > this.taskList.size() || taskNumber <= 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Task task = this.taskList.get(taskNumber - 1);
+        this.taskList.remove(taskNumber - 1);
+        return task;
+    }
+
     public int size() {
         return this.taskList.size();
     }

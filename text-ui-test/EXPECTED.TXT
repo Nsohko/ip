@@ -137,5 +137,21 @@
     Error! There is no task with that number!
 -------------------------------
 -------------------------------
+    Noted. I've removed this task:
+        [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+    Now you have 7 tasks in the list.
+-------------------------------
+-------------------------------
+    Noted. I've removed this task:
+        [T][ ] borrow book
+    Now you have 6 tasks in the list.
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
     Bye. Hope to see you again soon!
 -------------------------------

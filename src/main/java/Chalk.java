@@ -10,13 +10,15 @@ public class Chalk {
     private static final String END_CONVERSATION = "bye";
     private static final String LIST_TASKS = "list";
 
-    // matches string that starts with "mark " and has one or more digits after
-    // also allows for negative input (although this is obviously erroneous input, but it is handled by the markAsDone method)
-    private static final String MARK_TASK_AS_DONE = "mark -?\\d+";
-
-    // matches string that starts with "unmark " and has one or more digits after
-    // also allows for negative input (although this is obviously erroneous input, but it is handled by the unmarkAsDone method)
-    private static final String UNMARK_TASK_AS_DONE = "unmark -?\\d+";
+    /*
+     * The following 3 command are of the folloing format [commandName] [taskNumber]
+     * Currently, the regex for these will match negative inputs as well, to 
+     * However, this is obviously erroneous input so it should be handled in their respective methods (e.g. markTaskAsDone, unmarkTaskAsDone, etc.)
+     * The reason we allow negative input at this stage is to direct the code to the correct handler, so that a more specific error message can be generated if necessary
+     */
+    private static final String MARK_TASK_AS_DONE = "mark -?\\d+"; // matches string that starts with "mark " and has one or more digits after
+    private static final String UNMARK_TASK_AS_DONE = "unmark -?\\d+"; // matches string that starts with "unmark " and has one or more digits after
+    private static final String DELETE_TASK = "delete -?\\d+"; // matches string that starts with "delete " and has one or more digits after
 
     private final TaskList taskList;
 
@@ -76,7 +78,7 @@ public class Chalk {
         this.say(message);
     }
 
-    public void markAsDone(String command) {
+    public void markTaskAsDone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
 
@@ -94,7 +96,7 @@ public class Chalk {
         this.say(message);
     }
 
-    public void markAsUndone(String command) {
+    public void markTaskAsUndone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
         String message;
@@ -104,6 +106,24 @@ public class Chalk {
                 OK, I've marked this task as not done yet:
                     %s
                 """.formatted(task.toString());
+        } catch (IndexOutOfBoundsException e) {
+            message =  "Error! There is no task with that number!";
+        }
+
+        this.say(message);
+    }
+
+    public void deleteTask (String command) {
+        // taskNumber is 1-indexed
+        int taskNumber = Integer.parseInt(command.split(" ")[1]);
+        String message;
+        try {
+            Task task = this.taskList.deleteTask(taskNumber);
+            message = """
+                Noted. I've removed this task:
+                    %s
+                Now you have %d tasks in the list.
+                """.formatted(task.toString(), this.taskList.size());
         } catch (IndexOutOfBoundsException e) {
             message =  "Error! There is no task with that number!";
         }
@@ -128,9 +148,11 @@ public class Chalk {
             } else if (userInput.equals(LIST_TASKS)) {
                 chalk.listTaks();
             } else if (userInput.matches(MARK_TASK_AS_DONE)) {
-                chalk.markAsDone(userInput);
+                chalk.markTaskAsDone(userInput);
             } else if (userInput.matches(UNMARK_TASK_AS_DONE)) {
-                chalk.markAsUndone(userInput);
+                chalk.markTaskAsUndone(userInput);
+            } else if (userInput.matches(DELETE_TASK)) {
+                chalk.deleteTask(userInput);
             } else {
                 chalk.addTask(userInput);
             }
