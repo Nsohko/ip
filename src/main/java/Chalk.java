@@ -9,8 +9,14 @@ public class Chalk {
 
     private static final String END_CONVERSATION = "bye";
     private static final String LIST_TASKS = "list";
-    private static final String MARK_TASK_AS_DONE = "mark \\d+"; // matches string that starts with "mark " and has one or more digits after
-    private static final String UNMARK_TASK_AS_DONE = "unmark \\d+"; // matches string that starts with "unmark " and has one or more digits after
+
+    // matches string that starts with "mark " and has one or more digits after
+    // also allows for negative input (although this is obviously erroneous input, but it is handled by the markAsDone method)
+    private static final String MARK_TASK_AS_DONE = "mark -?\\d+";
+
+    // matches string that starts with "unmark " and has one or more digits after
+    // also allows for negative input (although this is obviously erroneous input, but it is handled by the unmarkAsDone method)
+    private static final String UNMARK_TASK_AS_DONE = "unmark -?\\d+";
 
     private final TaskList taskList;
 
@@ -52,51 +58,55 @@ public class Chalk {
     }
 
     public void addTask(String command) {
-        Task newTask = Task.fromCommand(command);
-        this.taskList.addTask(newTask);
+        String message;
+        try {
+            Task newTask = Task.fromCommand(command);
+            this.taskList.addTask(newTask);
 
-        String message = """
+            message = """
                 Got it. I've added this task:
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
+
+        } catch (IllegalArgumentException e) {
+            message = e.getMessage();
+        }
+        
         this.say(message);
     }
 
     public void markAsDone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
-        if (taskNumber > this.taskList.size()) {
-            String errorMessage = "Error! There is no task with that number!";
-            this.say(errorMessage);
-            return;
+
+        String message;
+        try {
+            Task task = this.taskList.markAsDone(taskNumber);
+            message = """
+                Nice! I've marked this task as done:
+                    %s
+                """.formatted(task.toString());
+            
+        } catch (IndexOutOfBoundsException e) {
+            message =  "Error! There is no task with that number!";
         }
-
-        Task task = this.taskList.markAsDone(taskNumber);
-
-        String message = """
-            Nice! I've marked this task as done:
-                %s
-            """.formatted(task.toString());
-
         this.say(message);
     }
 
     public void markAsUndone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
-        if (taskNumber >= this.taskList.size()) {
-            String errorMessage = "Error! There is no task with that number!";
-            this.say(errorMessage);
-            return;
+        String message;
+        try {
+            Task task = this.taskList.unmarkAsDone(taskNumber);
+            message = """
+                OK, I've marked this task as not done yet:
+                    %s
+                """.formatted(task.toString());
+        } catch (IndexOutOfBoundsException e) {
+            message =  "Error! There is no task with that number!";
         }
-
-        Task task = this.taskList.unmarkAsDone(taskNumber);
-
-        String message = """
-            OK, I've marked this task as not done yet:
-                %s
-            """.formatted(task.toString());
 
         this.say(message);
     }

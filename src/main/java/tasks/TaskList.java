@@ -15,14 +15,20 @@ public class TaskList {
     }
 
     // taskNumber is 1-indexed
-    public Task markAsDone(int taskNumber) {
+    public Task markAsDone(int taskNumber) throws IndexOutOfBoundsException {
+        if (taskNumber > this.taskList.size() || taskNumber <= 0) {
+            throw new IndexOutOfBoundsException();
+        }
         Task task = this.taskList.get(taskNumber - 1);
         task.markAsDone();
         return task;
     }
 
     // taskNumber is 1-indexed
-    public Task unmarkAsDone(int taskNumber) {
+    public Task unmarkAsDone(int taskNumber) throws IndexOutOfBoundsException {
+        if (taskNumber > this.taskList.size() || taskNumber <= 0) {
+            throw new IndexOutOfBoundsException();
+        }
         Task task = this.taskList.get(taskNumber - 1);
         task.unmarkAsDone();
         return task;

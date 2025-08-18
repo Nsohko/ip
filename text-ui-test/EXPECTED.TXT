@@ -89,6 +89,51 @@
     7. [E][X] cs2102 group meeting (from: Mon 2pm to: 4pm)
 -------------------------------
 -------------------------------
+    Unknown Command: hello
+-------------------------------
+-------------------------------
+    Todo task name cannot be empty.
+    Usage: todo [taskName]
+-------------------------------
+-------------------------------
+    Deadline task name and due date cannot be empty.
+    Usage: deadline [taskName] /by [dueDate]
+-------------------------------
+-------------------------------
+    Deadline task name and due date cannot be empty.
+    Usage: deadline [taskName] /by [dueDate]
+-------------------------------
+-------------------------------
+    Deadline task name and due date cannot be empty.
+    Usage: deadline [taskName] /by [dueDate]
+-------------------------------
+-------------------------------
+    Event task name, start time and end time cannot be empty.
+    Usage: event [eventName] /from [startTime] /to [endTime]
+-------------------------------
+-------------------------------
+    Event task name, start time and end time cannot be empty.
+    Usage: event [eventName] /from [startTime] /to [endTime]
+-------------------------------
+-------------------------------
+    Event task name, start time and end time cannot be empty.
+    Usage: event [eventName] /from [startTime] /to [endTime]
+-------------------------------
+-------------------------------
+    Got it. I've added this task:
+        [E][ ] testEvent (from: aug to: july)
+    Now you have 8 tasks in the list.
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
+    Error! There is no task with that number!
+-------------------------------
+-------------------------------
     Error! There is no task with that number!
 -------------------------------
 -------------------------------

@@ -14,5 +14,17 @@ unmark 1
 mark 7
 unmark 3
 list
-mark 29
+hello
+todo    
+deadline /by June
+deadline testDeadline june
+deadline testDeadline2 /by
+event 
+event /from june
+event testEvent /from june /to 
+event testEvent /to july /from aug
+mark 30
+unmark 9
+mark 0
+unmark -1
 bye
