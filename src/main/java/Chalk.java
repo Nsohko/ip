@@ -144,5 +144,7 @@ public class Chalk {
                 case ChalkCommands.ADD -> chalk.addTask(userInput);
             }
         }
+
+        scanner.close();
     }
 }
