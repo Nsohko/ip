@@ -1,4 +1,4 @@
-
+import commands.ChalkCommands;
 import java.util.Scanner;
 import tasks.Task;
 import tasks.TaskList;
@@ -7,20 +7,8 @@ public class Chalk {
 
     private static final String NAME = "Chalk";
 
-    private static final String END_CONVERSATION = "bye";
-    private static final String LIST_TASKS = "list";
-
-    /*
-     * The following 3 command are of the folloing format [commandName] [taskNumber]
-     * Currently, the regex for these will match negative inputs as well, to 
-     * However, this is obviously erroneous input so it should be handled in their respective methods (e.g. markTaskAsDone, unmarkTaskAsDone, etc.)
-     * The reason we allow negative input at this stage is to direct the code to the correct handler, so that a more specific error message can be generated if necessary
-     */
-    private static final String MARK_TASK_AS_DONE = "mark -?\\d+"; // matches string that starts with "mark " and has one or more digits after
-    private static final String UNMARK_TASK_AS_DONE = "unmark -?\\d+"; // matches string that starts with "unmark " and has one or more digits after
-    private static final String DELETE_TASK = "delete -?\\d+"; // matches string that starts with "delete " and has one or more digits after
-
     private final TaskList taskList;
+    private boolean running;
 
     public Chalk() {
         this.taskList = new TaskList();
@@ -33,11 +21,15 @@ public class Chalk {
             """.formatted(Chalk.NAME);
 
         this.say(message);
+
+        this.running = true;
     }
 
     public void terminate() {
         String message = "Bye. Hope to see you again soon!";
         this.say(message);
+
+        this.running = false;
     }
 
     public void say(String sentenceString) {
@@ -96,7 +88,7 @@ public class Chalk {
         this.say(message);
     }
 
-    public void markTaskAsUndone(String command) {
+    public void unmarkTaskAsDone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
         String message;
@@ -140,24 +132,17 @@ public class Chalk {
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
-        while (true) {
+        while (chalk.running) {
             userInput = scanner.nextLine();
 
-            if (userInput.equals(END_CONVERSATION)) {
-                break;
-            } else if (userInput.equals(LIST_TASKS)) {
-                chalk.listTaks();
-            } else if (userInput.matches(MARK_TASK_AS_DONE)) {
-                chalk.markTaskAsDone(userInput);
-            } else if (userInput.matches(UNMARK_TASK_AS_DONE)) {
-                chalk.markTaskAsUndone(userInput);
-            } else if (userInput.matches(DELETE_TASK)) {
-                chalk.deleteTask(userInput);
-            } else {
-                chalk.addTask(userInput);
+            switch (ChalkCommands.parse(userInput)) {
+                case ChalkCommands.BYE -> chalk.terminate();
+                case ChalkCommands.LIST -> chalk.listTaks();
+                case ChalkCommands.MARK -> chalk.markTaskAsDone(userInput);
+                case ChalkCommands.UNMARK -> chalk.unmarkTaskAsDone(userInput);
+                case ChalkCommands.DELETE -> chalk.deleteTask(userInput);
+                case ChalkCommands.ADD -> chalk.addTask(userInput);
             }
         }
-        chalk.terminate();
     }
-
 }
