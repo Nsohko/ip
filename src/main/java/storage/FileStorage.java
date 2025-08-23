@@ -64,9 +64,13 @@ public class FileStorage {
     }
 
     public void overWriteWithTaskList(TaskList taskList) throws IOException{
-        FileWriter fw = new FileWriter(this.storagePath);
-        fw.write(taskList.toFileStorage());
-        fw.close();
+        try {
+            FileWriter fw = new FileWriter(this.storagePath);
+            fw.write(taskList.toFileStorage());
+            fw.close();
+        } catch (IOException e) {
+            throw new IOException("Failed to update task in Storage!");
+        }
 
     }
 }

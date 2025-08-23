@@ -66,8 +66,7 @@ public class Chalk {
              this.ui.reply(message);
 
         } catch (IllegalArgumentException | IOException e) {
-            String errorMessage = e.getMessage();
-            this.ui.printError(errorMessage);
+            this.ui.printError(e.getMessage());
         }
     }
 
@@ -84,13 +83,8 @@ public class Chalk {
                 """.formatted(task.toString());
             this.ui.reply(message);
             
-        } catch (IndexOutOfBoundsException e) {
-            String errorMessage =  "There is no task with that number!";
-            this.ui.printError(errorMessage);
-            
-        } catch (IOException e) {
-            String errorMessage =  "Failed to update task in Storage!";
-            this.ui.printError(errorMessage);
+        } catch (IndexOutOfBoundsException | IOException e) {
+            this.ui.printError(e.getMessage());
         }
     }
 
@@ -106,12 +100,8 @@ public class Chalk {
                     %s
                 """.formatted(task.toString());
             this.ui.reply(message);
-        } catch (IndexOutOfBoundsException e) {
-            String errorMessage =  "There is no task with that number!";
-            this.ui.printError(errorMessage);
-        } catch (IOException e) {
-            String errorMessage =  "Failed to update task in Storage!";
-            this.ui.printError(errorMessage);
+        } catch (IndexOutOfBoundsException | IOException  e) {
+            this.ui.printError(e.getMessage());
         }
     }
 
@@ -128,12 +118,8 @@ public class Chalk {
                 Now you have %d tasks in the list.
                 """.formatted(task.toString(), this.taskList.size());
             this.ui.reply(message);
-        } catch (IndexOutOfBoundsException e) {
-            String errorMessage =  "There is no task with that number!";
-            this.ui.printError(errorMessage);
-        } catch (IOException e) {
-            String errorMessage = "Failed to delete task from Storage!";
-            this.ui.printError(errorMessage);
+        } catch (IndexOutOfBoundsException | IOException e) {
+            this.ui.printError(e.getMessage());
         }
     }
 

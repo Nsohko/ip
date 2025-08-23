@@ -22,8 +22,10 @@ public class Ui {
 
         System.out.println(Ui.lineBreak);
         System.out.println("    ERROR!");
-        for (String line : sentenceString.split("\n")) {
-            System.out.println("    " + line);
+        if (sentenceString != null) {
+            for (String line : sentenceString.split("\n")) {
+                System.out.println("    " + line);
+            }
         }
         System.out.println(Ui.lineBreak);
     }
