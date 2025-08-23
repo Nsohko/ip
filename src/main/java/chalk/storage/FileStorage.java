@@ -48,23 +48,23 @@ public class FileStorage {
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to read task " + taskNumber + ". Skipping task");
             }
-            taskNumber ++;
+            taskNumber++;
         }
         s.close();
         return taskList;
     }
 
-    public void addTask(Task task) throws IOException{
+    public void addTask(Task task) throws IOException {
         try {
             FileWriter fw = new FileWriter(this.storagePath, true); // create a FileWriter in append mode
-            fw.write(task.toFileStorage());
-            fw.close();   
+            fw.write(task.toFileStorage() + "\n");
+            fw.close();
         } catch (IOException e) {
             throw new IOException("Failed to write Task Info to file");
         }
     }
 
-    public void overWriteWithTaskList(TaskList taskList) throws IOException{
+    public void overWriteWithTaskList(TaskList taskList) throws IOException {
         try {
             FileWriter fw = new FileWriter(this.storagePath);
             fw.write(taskList.toFileStorage());

@@ -28,14 +28,18 @@ test {
 }
 
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("chalk.Chalk")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "chalk"
     archiveClassifier = null
 }
 
 run{
     standardInput = System.in
+}
+
+tasks.register("deploy") {
+    dependsOn("clean", "run")
 }

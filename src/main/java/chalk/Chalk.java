@@ -17,7 +17,7 @@ public class Chalk {
     public final Ui ui;
     private final FileStorage storage;
     private TaskList taskList;
-    
+
     private boolean running;
 
     public Chalk() {
@@ -37,11 +37,10 @@ public class Chalk {
             Hello! I'm %s
             What can I do for you?
             """.formatted(Chalk.NAME);
-        
+
         this.ui.reply(message);
         this.running = true;
 
-       
     }
 
     public void terminate() {
@@ -65,7 +64,7 @@ public class Chalk {
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
-             this.ui.reply(message);
+            this.ui.reply(message);
 
         } catch (IllegalArgumentException | IOException e) {
             this.ui.printError(e.getMessage());
@@ -81,7 +80,7 @@ public class Chalk {
                     %s
                 """.formatted(task.toString());
             this.ui.reply(message);
-            
+
         } catch (IndexOutOfBoundsException | IOException e) {
             this.ui.printError(e.getMessage());
         }
@@ -96,12 +95,12 @@ public class Chalk {
                     %s
                 """.formatted(task.toString());
             this.ui.reply(message);
-        } catch (IndexOutOfBoundsException | IOException  e) {
+        } catch (IndexOutOfBoundsException | IOException e) {
             this.ui.printError(e.getMessage());
         }
     }
 
-    public void deleteTask (int taskNumber) {
+    public void deleteTask(int taskNumber) {
         try {
             Task task = this.taskList.deleteTask(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
