@@ -17,4 +17,11 @@ class Event extends Task {
                 + " (from: " + this.startTime
                 + " to: " + this.endTime + ")";
     }
+
+    @Override
+    public String toFileStorage() {
+        return "event  " + this.getName() +
+            " /from " + this.startTime + " /to " + this.endTime +
+            super.toFileStorage();
+    }
 }
