@@ -4,7 +4,7 @@ REM create bin directory if it doesn't exist
 if not exist ..\bin mkdir ..\bin
 
 REM delete local file storage to test creation
-if exist .\data\ rmdir /s /q .\data
+if exist .\ChalkData\ rmdir /s /q .\ChalkData
 
 REM delete output from previous run
 if exist ACTUAL.TXT del ACTUAL.TXT
