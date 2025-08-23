@@ -1,14 +1,14 @@
 todo read book
-deadline return book /by June 6th
-event project meeting /from Aug 6th 2pm /to 4pm
+deadline return book /by 6/6/2025 1820
+event project meeting /from 6/8/2025 1400 /to 7/8/2025 1800
 todo join sports club
 list
 mark 1
 mark 3
 todo borrow book
 list
-deadline buy groceries /by Sunday
-event cs2102 group meeting /from Mon 2pm /to 4pm
+deadline buy groceries /by 20/9/2024 1900
+event cs2102 group meeting /from 31/10/2025 1700 /to 1/9/2025 0600
 list
 unmark 1
 mark 7
@@ -16,13 +16,13 @@ unmark 3
 list
 hello
 todo    
-deadline /by June
+deadline /by 30/08/2025 1800
 deadline testDeadline june
 deadline testDeadline2 /by
 event 
 event /from june
 event testEvent /from june /to 
-event testEvent /to july /from aug
+event testEvent /to 8/10/2025 0600 /from 3/10/2025 1800
 mark 30
 unmark 9
 mark 0
@@ -31,4 +31,6 @@ delete 3
 delete 4
 delete -1
 delete 100
+deadline testDeadline /by abc
+deadline testDeadline /by 8/10/2025
 bye

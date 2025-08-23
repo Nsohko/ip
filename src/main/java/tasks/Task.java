@@ -1,5 +1,8 @@
 package tasks;
 
+import datetime.DateTime;
+import java.time.format.DateTimeParseException;
+
 public abstract class Task {
 
     private final String taskName;
@@ -46,7 +49,7 @@ public abstract class Task {
             // trim to ensure it isnt just whitespace
             if (taskName.trim().isEmpty()) {
                 throw new IllegalArgumentException("""
-                        Todo task name cannot be empty.
+                        Error! Todo task name cannot be empty.
                         Usage: todo [taskName]
                         """);
             }
@@ -54,23 +57,30 @@ public abstract class Task {
             return new Todo(taskName);
 
         } else if (command.startsWith("deadline ")) {
-            // e.g. "deadline return book /by Sunday"
             // split into an array containing [taskName, deadlineTime]
             String[] parts = command.substring(9).split(" /by ", 2);
 
             if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
                  throw new IllegalArgumentException("""
-                        Deadline task name and due date cannot be empty.
+                        Error! Deadline task name and due date cannot be empty.
                         Usage: deadline [taskName] /by [dueDate]
                         """);
             }
 
             String taskName = parts[0];
-            String deadlineTime = parts[1];
+
+            DateTime deadlineTime;
+            try {
+                deadlineTime = new DateTime(parts[1]);
+            } catch (DateTimeParseException e) {
+                  throw new IllegalArgumentException("""
+                        Error! Provide deadline due date in the following format:
+                        dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
+                        """);
+            }
             return new Deadline(taskName, deadlineTime);
 
         } else if (command.startsWith("event ")) {
-            // e.g. "event project meeting /from Mon 2pm /to 4pm"
             // skip beginning 6 chars ("event ")
             String input = command.substring(6);
 
@@ -82,25 +92,39 @@ public abstract class Task {
 
             if (taskName.trim().isEmpty() || fromIndex == -1 || toIndex == -1) {
                  throw new IllegalArgumentException("""
-                        Event task name, start time and end time cannot be empty.
+                        Error! Event task name, start time and end time cannot be empty.
                         Usage: event [eventName] /from [startTime] /to [endTime]
                         """);
             }
 
             // skip to fromIndex plus 7 chars (" /from "), then split until next subcommand (denoted by a new " /")
-            String startTime = input.substring(fromIndex + 7).split(" /")[0].trim();
+            String startTimeString = input.substring(fromIndex + 7).split(" /")[0].trim();
 
             // skip to toIndex plus 5 chars (" /to "), then split until next subcommand (denoted by a new " /")
-            String endTime = input.substring(toIndex + 5).split(" /")[0].trim();
+            String endTimeString = input.substring(toIndex + 5).split(" /")[0].trim();
 
-            if (startTime.strip().isEmpty() || endTime.strip().isEmpty()) {
+            if (startTimeString.trim().isEmpty() || endTimeString.trim().isEmpty()) {
                 throw new IllegalArgumentException("""
-                        Event task name, start time and end time cannot be empty.
+                        Error! Event task name, start time and end time cannot be empty.
                         Usage: event [eventName] /from [startTime] /to [endTime]
                         """);
             }
+            
+            DateTime startTime;
+            DateTime endTime;
+            try {
+                startTime = new DateTime(startTimeString);
+                endTime = new DateTime(endTimeString);
+                
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("""
+                    Error! Provide event start and end time in the following format:
+                    dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
+                    """);
+            }
+            
             return new Event(taskName, startTime, endTime);
         }
-        throw new IllegalArgumentException("Unknown Command: " + command);
+        throw new IllegalArgumentException("Error! Unknown Command: " + command);
     }
 }

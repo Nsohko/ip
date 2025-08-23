@@ -1,11 +1,13 @@
 package tasks;
 
+import datetime.DateTime;
+
 class Event extends Task {
 
-    private final String startTime;
-    private final String endTime;
+    private final DateTime startTime;
+    private final DateTime endTime;
 
-    public Event(String taskName, String startTime, String endTime) {
+    public Event(String taskName, DateTime startTime, DateTime endTime) {
         super(taskName);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -14,14 +16,14 @@ class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString()
-                + " (from: " + this.startTime
-                + " to: " + this.endTime + ")";
+                + " (from: " + this.startTime.toString()
+                + " to: " + this.endTime.toString() + ")";
     }
 
     @Override
     public String toFileStorage() {
         return "event  " + this.getName() +
-            " /from " + this.startTime + " /to " + this.endTime +
+            " /from " + this.startTime.toFileStorage() + " /to " + this.endTime.toFileStorage() +
             super.toFileStorage();
     }
 }
