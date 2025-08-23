@@ -1,4 +1,4 @@
-package ui;
+package chalk.ui;
 
 public class Ui {
 

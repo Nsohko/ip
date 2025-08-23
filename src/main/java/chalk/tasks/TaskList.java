@@ -1,4 +1,4 @@
-package tasks;
+package chalk.tasks;
 
 import java.util.ArrayList;
 

@@ -1,11 +1,12 @@
-package storage;
+package chalk.storage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import tasks.Task;
-import tasks.TaskList;
+
+import chalk.tasks.Task;
+import chalk.tasks.TaskList;
 
 public class FileStorage {
 
