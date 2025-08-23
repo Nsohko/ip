@@ -1,4 +1,6 @@
-import commands.ChalkCommands;
+package chalkmain;
+
+import commands.ChalkCommand;
 import java.io.IOException;
 import java.util.Scanner;
 import storage.FileStorage;
@@ -11,7 +13,7 @@ public class Chalk {
     private static final String NAME = "Chalk";
     private static final String PATH_TO_STORAGE = "./ChalkData/Storage.txt";
 
-    private final Ui ui;
+    public final Ui ui;
     private final FileStorage storage;
     private TaskList taskList;
     
@@ -48,14 +50,13 @@ public class Chalk {
         this.running = false;
     }
 
-    public void listTaks() {
+    public void listTasks() {
         this.ui.reply(this.taskList.toString());
     }
 
-    public void addTask(String command) {
+    public void addTask(Task newTask) {
         try {
-            Task newTask = Task.fromCommand(command);
-            this.storage.addTask(command);
+            this.storage.addTask(newTask);
             this.taskList.addTask(newTask);
 
             String message = """
@@ -70,10 +71,7 @@ public class Chalk {
         }
     }
 
-    public void markTaskAsDone(String command) {
-        // taskNumber is 1-indexed
-        int taskNumber = Integer.parseInt(command.split(" ")[1]);
-
+    public void markTaskAsDone(int taskNumber) {
         try {
             Task task = this.taskList.markAsDone(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
@@ -88,10 +86,7 @@ public class Chalk {
         }
     }
 
-    public void unmarkTaskAsDone(String command) {
-        // taskNumber is 1-indexed
-        int taskNumber = Integer.parseInt(command.split(" ")[1]);
-
+    public void unmarkTaskAsDone(int taskNumber) {
         try {
             Task task = this.taskList.unmarkAsDone(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
@@ -105,10 +100,7 @@ public class Chalk {
         }
     }
 
-    public void deleteTask (String command) {
-        // taskNumber is 1-indexed
-        int taskNumber = Integer.parseInt(command.split(" ")[1]);
-
+    public void deleteTask (int taskNumber) {
         try {
             Task task = this.taskList.deleteTask(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
@@ -132,15 +124,8 @@ public class Chalk {
 
         while (chalk.running && scanner.hasNext()) {
             userInput = scanner.nextLine();
-
-            switch (ChalkCommands.parse(userInput)) {
-                case ChalkCommands.BYE -> chalk.terminate();
-                case ChalkCommands.LIST -> chalk.listTaks();
-                case ChalkCommands.MARK -> chalk.markTaskAsDone(userInput);
-                case ChalkCommands.UNMARK -> chalk.unmarkTaskAsDone(userInput);
-                case ChalkCommands.DELETE -> chalk.deleteTask(userInput);
-                case ChalkCommands.ADD -> chalk.addTask(userInput);
-            }
+            ChalkCommand command = ChalkCommand.parse(userInput);
+            command.execute(chalk);
         }
 
         scanner.close();

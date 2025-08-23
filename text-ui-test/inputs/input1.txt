@@ -33,4 +33,5 @@ delete -1
 delete 100
 deadline testDeadline /by abc
 deadline testDeadline /by 8/10/2025
+mark abc
 bye

@@ -39,12 +39,12 @@ public abstract class Task {
         return " | " + completionStatus;
     }
 
-    // factory method to create the appropriate task subtype from a command
-    public static Task fromCommand(String command) throws IllegalArgumentException {
+    // factory method to create the appropriate task subtype from an input command
+    public static Task fromInputCommand(String inputCommand) throws IllegalArgumentException {
 
-        if (command.startsWith("todo ")) {
+        if (inputCommand.startsWith("todo ")) {
             // skip the beginning 5 chars ("todo ")
-            String taskName = command.substring(5).trim();
+            String taskName = inputCommand.substring(5).trim();
 
             // trim to ensure it isnt just whitespace
             if (taskName.trim().isEmpty()) {
@@ -56,9 +56,9 @@ public abstract class Task {
 
             return new Todo(taskName);
 
-        } else if (command.startsWith("deadline ")) {
+        } else if (inputCommand.startsWith("deadline ")) {
             // split into an array containing [taskName, deadlineTime]
-            String[] parts = command.substring(9).split(" /by ", 2);
+            String[] parts = inputCommand.substring(9).split(" /by ", 2);
 
             if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
                  throw new IllegalArgumentException("""
@@ -80,9 +80,9 @@ public abstract class Task {
             }
             return new Deadline(taskName, deadlineTime);
 
-        } else if (command.startsWith("event ")) {
+        } else if (inputCommand.startsWith("event ")) {
             // skip beginning 6 chars ("event ")
-            String input = command.substring(6);
+            String input = inputCommand.substring(6);
 
             String taskName = input.split(" /")[0].trim();
 
@@ -125,6 +125,6 @@ public abstract class Task {
             
             return new Event(taskName, startTime, endTime);
         }
-        throw new IllegalArgumentException("Unknown Command: " + command);
+        throw new IllegalArgumentException("Unknown Command: " + inputCommand);
     }
 }

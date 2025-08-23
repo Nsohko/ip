@@ -39,7 +39,7 @@ public class FileStorage {
             }
 
             try {
-                Task newTask = Task.fromCommand(taskInfo[0]);
+                Task newTask = Task.fromInputCommand(taskInfo[0]);
                 if (isDone) {
                     newTask.markAsDone();
                 }
@@ -53,10 +53,10 @@ public class FileStorage {
         return taskList;
     }
 
-    public void addTask(String command) throws IOException{
+    public void addTask(Task task) throws IOException{
         try {
             FileWriter fw = new FileWriter(this.storagePath, true); // create a FileWriter in append mode
-            fw.write(command +  " | " + "0");
+            fw.write(task.toFileStorage());
             fw.close();   
         } catch (IOException e) {
             throw new IOException("Failed to write Task Info to file");
