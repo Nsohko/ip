@@ -92,34 +92,42 @@
     7. [E][X] cs2102 group meeting (from: 31 October 2025 1700hrs to: 1 September 2025 0600hrs)
 -------------------------------
 -------------------------------
-    Error! Unknown Command: hello
+    ERROR!
+    Unknown Command: hello
 -------------------------------
 -------------------------------
-    Error! Todo task name cannot be empty.
+    ERROR!
+    Todo task name cannot be empty.
     Usage: todo [taskName]
 -------------------------------
 -------------------------------
-    Error! Deadline task name and due date cannot be empty.
+    ERROR!
+    Deadline task name and due date cannot be empty.
     Usage: deadline [taskName] /by [dueDate]
 -------------------------------
 -------------------------------
-    Error! Deadline task name and due date cannot be empty.
+    ERROR!
+    Deadline task name and due date cannot be empty.
     Usage: deadline [taskName] /by [dueDate]
 -------------------------------
 -------------------------------
-    Error! Deadline task name and due date cannot be empty.
+    ERROR!
+    Deadline task name and due date cannot be empty.
     Usage: deadline [taskName] /by [dueDate]
 -------------------------------
 -------------------------------
-    Error! Event task name, start time and end time cannot be empty.
+    ERROR!
+    Event task name, start time and end time cannot be empty.
     Usage: event [eventName] /from [startTime] /to [endTime]
 -------------------------------
 -------------------------------
-    Error! Event task name, start time and end time cannot be empty.
+    ERROR!
+    Event task name, start time and end time cannot be empty.
     Usage: event [eventName] /from [startTime] /to [endTime]
 -------------------------------
 -------------------------------
-    Error! Event task name, start time and end time cannot be empty.
+    ERROR!
+    Event task name, start time and end time cannot be empty.
     Usage: event [eventName] /from [startTime] /to [endTime]
 -------------------------------
 -------------------------------
@@ -128,16 +136,20 @@
     Now you have 8 tasks in the list.
 -------------------------------
 -------------------------------
-    Error! There is no task with that number!
+    ERROR!
+    There is no task with that number!
 -------------------------------
 -------------------------------
-    Error! There is no task with that number!
+    ERROR!
+    There is no task with that number!
 -------------------------------
 -------------------------------
-    Error! There is no task with that number!
+    ERROR!
+    There is no task with that number!
 -------------------------------
 -------------------------------
-    Error! There is no task with that number!
+    ERROR!
+    There is no task with that number!
 -------------------------------
 -------------------------------
     Noted. I've removed this task:
@@ -150,17 +162,21 @@
     Now you have 6 tasks in the list.
 -------------------------------
 -------------------------------
-    Error! There is no task with that number!
+    ERROR!
+    There is no task with that number!
 -------------------------------
 -------------------------------
-    Error! There is no task with that number!
+    ERROR!
+    There is no task with that number!
 -------------------------------
 -------------------------------
-    Error! Provide deadline due date in the following format:
+    ERROR!
+    Provide deadline due date in the following format:
     dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
 -------------------------------
 -------------------------------
-    Error! Provide deadline due date in the following format:
+    ERROR!
+    Provide deadline due date in the following format:
     dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
 -------------------------------
 -------------------------------

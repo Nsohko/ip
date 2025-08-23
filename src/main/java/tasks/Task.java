@@ -49,7 +49,7 @@ public abstract class Task {
             // trim to ensure it isnt just whitespace
             if (taskName.trim().isEmpty()) {
                 throw new IllegalArgumentException("""
-                        Error! Todo task name cannot be empty.
+                        Todo task name cannot be empty.
                         Usage: todo [taskName]
                         """);
             }
@@ -62,7 +62,7 @@ public abstract class Task {
 
             if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
                  throw new IllegalArgumentException("""
-                        Error! Deadline task name and due date cannot be empty.
+                        Deadline task name and due date cannot be empty.
                         Usage: deadline [taskName] /by [dueDate]
                         """);
             }
@@ -74,7 +74,7 @@ public abstract class Task {
                 deadlineTime = new DateTime(parts[1]);
             } catch (DateTimeParseException e) {
                   throw new IllegalArgumentException("""
-                        Error! Provide deadline due date in the following format:
+                        Provide deadline due date in the following format:
                         dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
                         """);
             }
@@ -92,7 +92,7 @@ public abstract class Task {
 
             if (taskName.trim().isEmpty() || fromIndex == -1 || toIndex == -1) {
                  throw new IllegalArgumentException("""
-                        Error! Event task name, start time and end time cannot be empty.
+                        Event task name, start time and end time cannot be empty.
                         Usage: event [eventName] /from [startTime] /to [endTime]
                         """);
             }
@@ -105,7 +105,7 @@ public abstract class Task {
 
             if (startTimeString.trim().isEmpty() || endTimeString.trim().isEmpty()) {
                 throw new IllegalArgumentException("""
-                        Error! Event task name, start time and end time cannot be empty.
+                        Event task name, start time and end time cannot be empty.
                         Usage: event [eventName] /from [startTime] /to [endTime]
                         """);
             }
@@ -118,13 +118,13 @@ public abstract class Task {
                 
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException("""
-                    Error! Provide event start and end time in the following format:
+                    Provide event start and end time in the following format:
                     dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
                     """);
             }
             
             return new Event(taskName, startTime, endTime);
         }
-        throw new IllegalArgumentException("Error! Unknown Command: " + command);
+        throw new IllegalArgumentException("Unknown Command: " + command);
     }
 }

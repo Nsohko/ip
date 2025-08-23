@@ -4,153 +4,142 @@ import java.util.Scanner;
 import storage.FileStorage;
 import tasks.Task;
 import tasks.TaskList;
+import ui.Ui;
 
 public class Chalk {
 
     private static final String NAME = "Chalk";
+    private static final String PATH_TO_STORAGE = "./ChalkData/Storage.txt";
 
-    private TaskList taskList;
+    private final Ui ui;
     private final FileStorage storage;
+    private TaskList taskList;
+    
     private boolean running;
 
     public Chalk() {
-        this.taskList = new TaskList();
-        this.storage = new FileStorage();
-    }
 
-    public void initialize() {
+        this.ui = new Ui();
+        this.storage = new FileStorage(PATH_TO_STORAGE);
 
         try {
-            this.taskList = this.storage.initialize();
-            this.say("Storage Initialized!");
+            this.taskList = this.storage.load();
+            this.ui.reply("Storage Initialized!");
         } catch (IOException e) {
-            this.say("Error Creating File Storage. Terminating early.");
+            this.ui.printError("Unable to create File Storage. Terminating early.");
             return;
         }
-        
+
         String message = """
             Hello! I'm %s
             What can I do for you?
             """.formatted(Chalk.NAME);
-
-        this.say(message);
-
+        
+        this.ui.reply(message);
         this.running = true;
+
+       
     }
 
     public void terminate() {
         String message = "Bye. Hope to see you again soon!";
-        this.say(message);
+        this.ui.reply(message);
 
         this.running = false;
     }
 
-    public void say(String sentenceString) {
-
-        String lineBreak = "-------------------------------";
-        System.out.println(lineBreak);
-
-        // split each line based on new line character, then prepend 4 spaces
-        // not the best solution, because it doesnt account for when long lines wrap around
-        // but it will do for now
-        for (String line : sentenceString.split("\n")) {
-            System.out.println("    " + line);
-        }
-
-        System.out.println(lineBreak);
-    }
-
     public void listTaks() {
-        this.say(this.taskList.toString());
+        this.ui.reply(this.taskList.toString());
     }
 
     public void addTask(String command) {
-        String message;
         try {
             Task newTask = Task.fromCommand(command);
             this.storage.addTask(command);
             this.taskList.addTask(newTask);
 
-            message = """
+            String message = """
                 Got it. I've added this task:
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
+             this.ui.reply(message);
 
         } catch (IllegalArgumentException | IOException e) {
-            message = e.getMessage();
+            String errorMessage = e.getMessage();
+            this.ui.printError(errorMessage);
         }
-        
-        this.say(message);
     }
 
     public void markTaskAsDone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
 
-        String message;
         try {
             Task task = this.taskList.markAsDone(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
-            message = """
+            String message = """
                 Nice! I've marked this task as done:
                     %s
                 """.formatted(task.toString());
+            this.ui.reply(message);
             
         } catch (IndexOutOfBoundsException e) {
-            message =  "Error! There is no task with that number!";
+            String errorMessage =  "There is no task with that number!";
+            this.ui.printError(errorMessage);
             
         } catch (IOException e) {
-            message =  "Error! Failed to update task in Storage!";
+            String errorMessage =  "Failed to update task in Storage!";
+            this.ui.printError(errorMessage);
         }
-        this.say(message);
     }
 
     public void unmarkTaskAsDone(String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
-        String message;
+
         try {
             Task task = this.taskList.unmarkAsDone(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
-            message = """
+            String message = """
                 OK, I've marked this task as not done yet:
                     %s
                 """.formatted(task.toString());
+            this.ui.reply(message);
         } catch (IndexOutOfBoundsException e) {
-            message =  "Error! There is no task with that number!";
+            String errorMessage =  "There is no task with that number!";
+            this.ui.printError(errorMessage);
         } catch (IOException e) {
-            message =  "Error! Failed to update task in Storage!";
+            String errorMessage =  "Failed to update task in Storage!";
+            this.ui.printError(errorMessage);
         }
-        this.say(message);
     }
 
     public void deleteTask (String command) {
         // taskNumber is 1-indexed
         int taskNumber = Integer.parseInt(command.split(" ")[1]);
-        String message;
+
         try {
             Task task = this.taskList.deleteTask(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
-            message = """
+            String message = """
                 Noted. I've removed this task:
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(task.toString(), this.taskList.size());
+            this.ui.reply(message);
         } catch (IndexOutOfBoundsException e) {
-            message =  "Error! There is no task with that number!";
+            String errorMessage =  "There is no task with that number!";
+            this.ui.printError(errorMessage);
         } catch (IOException e) {
-            message = "Error! Failed to delete task from Storage!";
+            String errorMessage = "Failed to delete task from Storage!";
+            this.ui.printError(errorMessage);
         }
-
-        this.say(message);
     }
 
     public static void main(String[] args) {
 
         Chalk chalk = new Chalk();
-
-        chalk.initialize();
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
