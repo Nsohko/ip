@@ -1,6 +1,6 @@
-package commands;
+package chalk.commands;
 
-import chalkmain.Chalk;
+import chalk.Chalk;
 
 public class DeleteCommand extends ChalkCommand {
 

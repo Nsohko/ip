@@ -1,6 +1,6 @@
-package tasks;
+package chalk.tasks;
 
-import datetime.DateTime;
+import chalk.datetime.DateTime;
 
 class Deadline extends Task {
 

@@ -1,7 +1,7 @@
-package commands;
+package chalk.commands;
 
-import chalkmain.Chalk;
-import tasks.Task;
+import chalk.Chalk;
+import chalk.tasks.Task;
 
 public class AddCommand extends ChalkCommand {
 

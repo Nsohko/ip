@@ -1,12 +1,13 @@
-package chalkmain;
+package chalk;
 
-import commands.ChalkCommand;
 import java.io.IOException;
 import java.util.Scanner;
-import storage.FileStorage;
-import tasks.Task;
-import tasks.TaskList;
-import ui.Ui;
+
+import chalk.commands.ChalkCommand;
+import chalk.storage.FileStorage;
+import chalk.tasks.Task;
+import chalk.tasks.TaskList;
+import chalk.ui.Ui;
 
 public class Chalk {
 

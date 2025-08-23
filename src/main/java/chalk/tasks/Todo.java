@@ -1,4 +1,4 @@
-package tasks;
+package chalk.tasks;
 
 class Todo extends Task {
 
