@@ -60,4 +60,16 @@ public class TaskList {
 
         return res;
     }
+
+    public String toFileStorage() {
+        String res = "";
+
+        Task task;
+        for (int i = 0; i < this.taskList.size(); i++) {
+            task = this.taskList.get(i);
+            res += (task.toFileStorage() + "\n");
+        }
+
+        return res;
+    }
 }

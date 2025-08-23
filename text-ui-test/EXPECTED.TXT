@@ -1,4 +1,7 @@
 -------------------------------
+    Storage Initialized!
+-------------------------------
+-------------------------------
     Hello! I'm Chalk
     What can I do for you?
 -------------------------------
@@ -151,6 +154,24 @@
 -------------------------------
 -------------------------------
     Error! There is no task with that number!
+-------------------------------
+-------------------------------
+    Bye. Hope to see you again soon!
+-------------------------------
+-------------------------------
+    Storage Initialized!
+-------------------------------
+-------------------------------
+    Hello! I'm Chalk
+    What can I do for you?
+-------------------------------
+-------------------------------
+    1. [T][ ] read book
+    2. [D][ ] return book (by: June 6th)
+    3. [T][ ] join sports club
+    4. [D][ ] buy groceries (by: Sunday)
+    5. [E][X] cs2102 group meeting (from: Mon 2pm to: 4pm)
+    6. [E][ ] testEvent (from: aug to: july)
 -------------------------------
 -------------------------------
     Bye. Hope to see you again soon!

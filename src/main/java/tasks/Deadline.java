@@ -14,4 +14,11 @@ class Deadline extends Task {
         return "[D]" + super.toString()
                 + " (by: " + this.deadlineTime + ")";
     }
+
+    @Override
+    public String toFileStorage() {
+        return "deadline " + this.getName() +
+            " /by " + this.deadlineTime +
+            super.toFileStorage() ;
+    }
 }

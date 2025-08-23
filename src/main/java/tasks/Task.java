@@ -18,12 +18,22 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public String getName() {
+        return this.taskName;
+    }
+
     @Override
     public String toString() {
         return "["
                 + (this.isDone ? "X" : " ")
                 + "] "
                 + this.taskName;
+    }
+
+
+    public String toFileStorage() {
+        String completionStatus = this.isDone ? "1" : "0";
+        return " | " + completionStatus;
     }
 
     // factory method to create the appropriate task subtype from a command
