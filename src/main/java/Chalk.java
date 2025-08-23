@@ -1,5 +1,7 @@
 import commands.ChalkCommands;
+import java.io.IOException;
 import java.util.Scanner;
+import storage.FileStorage;
 import tasks.Task;
 import tasks.TaskList;
 
@@ -7,14 +9,25 @@ public class Chalk {
 
     private static final String NAME = "Chalk";
 
-    private final TaskList taskList;
+    private TaskList taskList;
+    private final FileStorage storage;
     private boolean running;
 
     public Chalk() {
         this.taskList = new TaskList();
+        this.storage = new FileStorage();
     }
 
     public void initialize() {
+
+        try {
+            this.taskList = this.storage.initialize();
+            this.say("Storage Initialized!");
+        } catch (IOException e) {
+            this.say("Error Creating File Storage. Terminating early.");
+            return;
+        }
+        
         String message = """
             Hello! I'm %s
             What can I do for you?
