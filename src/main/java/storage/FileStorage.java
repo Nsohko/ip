@@ -9,10 +9,14 @@ import tasks.TaskList;
 
 public class FileStorage {
 
-    private static final String PATH_TO_STORAGE = "./ChalkData/Storage.txt";
+    private final String storagePath;
 
-    public TaskList initialize() throws IOException {
-        File storage = new File(FileStorage.PATH_TO_STORAGE);
+    public FileStorage(String storagePath) {
+        this.storagePath = storagePath;
+    }
+
+    public TaskList load() throws IOException {
+        File storage = new File(this.storagePath);
         if (!storage.exists()) {
             storage.getParentFile().mkdirs();
             storage.createNewFile();
@@ -35,13 +39,13 @@ public class FileStorage {
             }
 
             try {
-                Task newTask = Task.fromCommand(taskInfo[0]);
+                Task newTask = Task.fromInputCommand(taskInfo[0]);
                 if (isDone) {
                     newTask.markAsDone();
                 }
                 taskList.addTask(newTask);
             } catch (IllegalArgumentException e) {
-                System.out.println("Error reading task " + taskNumber + ". Skipping task");
+                System.out.println("Unable to read task " + taskNumber + ". Skipping task");
             }
             taskNumber ++;
         }
@@ -49,10 +53,10 @@ public class FileStorage {
         return taskList;
     }
 
-    public void addTask(String command) throws IOException{
+    public void addTask(Task task) throws IOException{
         try {
-            FileWriter fw = new FileWriter(FileStorage.PATH_TO_STORAGE, true); // create a FileWriter in append mode
-            fw.write(command +  " | " + "0");
+            FileWriter fw = new FileWriter(this.storagePath, true); // create a FileWriter in append mode
+            fw.write(task.toFileStorage());
             fw.close();   
         } catch (IOException e) {
             throw new IOException("Failed to write Task Info to file");
@@ -60,9 +64,13 @@ public class FileStorage {
     }
 
     public void overWriteWithTaskList(TaskList taskList) throws IOException{
-        FileWriter fw = new FileWriter(FileStorage.PATH_TO_STORAGE);
-        fw.write(taskList.toFileStorage());
-        fw.close();
+        try {
+            FileWriter fw = new FileWriter(this.storagePath);
+            fw.write(taskList.toFileStorage());
+            fw.close();
+        } catch (IOException e) {
+            throw new IOException("Failed to update task in Storage!");
+        }
 
     }
 }
