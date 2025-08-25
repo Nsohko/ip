@@ -119,15 +119,15 @@ public class Chalk {
 
         Chalk chalk = new Chalk();
 
-        Scanner scanner = new Scanner(System.in);
-        String userInput;
+        try (Scanner s = new Scanner(System.in)) {
+            String userInput;
 
-        while (chalk.running && scanner.hasNext()) {
-            userInput = scanner.nextLine();
-            ChalkCommand command = ChalkCommand.parse(userInput);
-            command.execute(chalk);
+            while (chalk.running && s.hasNext()) {
+                userInput = s.nextLine();
+                ChalkCommand command = ChalkCommand.parse(userInput);
+                command.execute(chalk);
+            }
         }
 
-        scanner.close();
     }
 }
