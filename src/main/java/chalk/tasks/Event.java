@@ -2,7 +2,7 @@ package chalk.tasks;
 
 import chalk.datetime.DateTime;
 
-class Event extends Task {
+public class Event extends Task {
 
     private final DateTime startTime;
     private final DateTime endTime;
@@ -22,8 +22,8 @@ class Event extends Task {
 
     @Override
     public String toFileStorage() {
-        return "event  " + this.getName() +
-            " /from " + this.startTime.toFileStorage() + " /to " + this.endTime.toFileStorage() +
-            super.toFileStorage();
+        return "event " + this.getName()
+                + " /from " + this.startTime.toFileStorage() + " /to " + this.endTime.toFileStorage()
+                + super.toFileStorage();
     }
 }

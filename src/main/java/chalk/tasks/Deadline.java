@@ -2,7 +2,7 @@ package chalk.tasks;
 
 import chalk.datetime.DateTime;
 
-class Deadline extends Task {
+public class Deadline extends Task {
 
     private final DateTime deadlineTime;
 
@@ -19,8 +19,8 @@ class Deadline extends Task {
 
     @Override
     public String toFileStorage() {
-        return "deadline " + this.getName() +
-            " /by " + this.deadlineTime.toFileStorage() +
-            super.toFileStorage() ;
+        return "deadline " + this.getName()
+                + " /by " + this.deadlineTime.toFileStorage()
+                + super.toFileStorage();
     }
 }

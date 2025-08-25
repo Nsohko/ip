@@ -1,6 +1,6 @@
 package chalk.tasks;
 
-class Todo extends Task {
+public class Todo extends Task {
 
     public Todo(String taskName) {
         super(taskName);
@@ -13,7 +13,7 @@ class Todo extends Task {
 
     @Override
     public String toFileStorage() {
-        return "todo  " + this.getName()
-            + super.toFileStorage();
+        return "todo " + this.getName()
+                + super.toFileStorage();
     }
 }

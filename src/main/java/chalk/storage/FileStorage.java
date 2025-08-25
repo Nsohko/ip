@@ -56,21 +56,17 @@ public class FileStorage {
 
     public void addTask(Task task) throws IOException {
         try (FileWriter fw = new FileWriter(this.storagePath, true)) {
-            try {
-                fw.write(task.toFileStorage() + "\n");
-            } catch (IOException e) {
-                throw new IOException("Failed to write Task Info to file");
-            }
+            fw.write(task.toFileStorage() + "\n");
+        } catch (IOException e) {
+            throw new IOException("Failed to write Task information to file!");
         }
     }
 
     public void overWriteWithTaskList(TaskList taskList) throws IOException {
         try (FileWriter fw = new FileWriter(this.storagePath)) {
-            try {
-                fw.write(taskList.toFileStorage());
-            } catch (IOException e) {
-                throw new IOException("Failed to update task in Storage!");
-            }
+            fw.write(taskList.toFileStorage());
+        } catch (IOException e) {
+            throw new IOException("Failed to update task in Storage!");
         }
     }
 }
