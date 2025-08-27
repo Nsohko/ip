@@ -63,9 +63,7 @@ class TaskListTest {
                 1. [ ] book1
                 2. [ ] book2
                 """;
-
         assertEquals(expected, filteredList.toString());
-        
     }
 
     @Test

@@ -168,6 +168,11 @@ public class Chalk {
         }
     }
 
+    /**
+     * Searches for tasks whose name constains searchParam
+     *
+     * @param searchParam The search parameter to match tasks' names against
+     */
     public void searchTasks(String searchParam) {
 
         TaskList filteredTaskList = this.taskList.searchTasks(searchParam);

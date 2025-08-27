@@ -77,7 +77,9 @@ public class TaskList implements Storable {
     }
 
     /**
-     * {@inheritDoc}
+     * Searches for tasks whose names contains searchParam
+     *
+     * @param searchParam The search parameter
      */
     public TaskList searchTasks(String searchParam) {
         TaskList filteredList = new TaskList();

@@ -32,7 +32,7 @@ public abstract class ChalkCommand {
      * Parses and creates the appropriate command subtype from an input command
      * Acts like a factory method
      *
-     * @param input The entire command to be parsed into a command
+     * @param input The entire user inpuut to be parsed into a command
      */
     public static ChalkCommand parse(String input) {
 
