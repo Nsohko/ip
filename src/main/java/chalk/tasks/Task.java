@@ -7,26 +7,50 @@ import chalk.storage.Storable;
 
 public abstract class Task implements Storable {
 
+    /**
+     * The name of this Task
+     */
     private final String taskName;
+
+    /**
+     * Boolean representing whether or not this task is done
+     */
     private boolean isDone;
 
+    /**
+     * Base constructor for Task
+     *
+     * @param taskName The name of the Task
+     */
     public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
     }
 
+    /**
+     * Marks current task as done
+     */
     public void markAsDone() {
         this.isDone = true;
     }
 
+    /**
+     * Unmarks current task
+     */
     public void unmarkAsDone() {
         this.isDone = false;
     }
 
+    /**
+     * Returns name of current task
+     */
     public String getName() {
         return this.taskName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "["
@@ -35,13 +59,21 @@ public abstract class Task implements Storable {
                 + this.taskName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileStorage() {
         String completionStatus = this.isDone ? "1" : "0";
         return " | " + completionStatus;
     }
 
-    // factory method to create the appropriate task subtype from an input command
+    /**
+     * Creates the appropriate task subtype from an input command Acts like a
+     * factory method
+     *
+     * @param inputCommand The entire command to be parsed into a task
+     */
     public static Task fromInputCommand(String inputCommand) throws IllegalArgumentException {
 
         if (inputCommand.startsWith("todo ")) {

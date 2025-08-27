@@ -11,15 +11,40 @@ import chalk.ui.Ui;
 
 public class Chalk {
 
+    /**
+     * Chalk's name
+     */
     private static final String NAME = "Chalk";
+
+    /**
+     * Default path to storage file
+     */
     private static final String PATH_TO_STORAGE = "./ChalkData/Storage.txt";
 
+    /**
+     * Chalk's UI object. Responsible for output onto STDIO
+     */
     public final Ui ui;
+
+    /**
+     * Chalk's FileStorage object. Resposible for managing tasks in file storage
+     */
     private final FileStorage storage;
+
+    /**
+     * Chalk's TaskList object. Responsible for managing tasks in memory
+     */
     private TaskList taskList;
 
+    /**
+     * Boolean representing whether or not this Chalk object is running
+     */
     private boolean running;
 
+    /**
+     * Initializes the Chalk object, and starts its running If an error occurs
+     * during initializations, terminates Chalk and returns early
+     */
     public Chalk() {
 
         this.ui = new Ui();
@@ -40,9 +65,11 @@ public class Chalk {
 
         this.ui.reply(message);
         this.running = true;
-
     }
 
+    /**
+     * Terminates the chalk object
+     */
     public void terminate() {
         String message = "Bye. Hope to see you again soon!";
         this.ui.reply(message);
@@ -50,10 +77,18 @@ public class Chalk {
         this.running = false;
     }
 
+    /**
+     * Lists all tasks stored inside the
+     */
     public void listTasks() {
         this.ui.reply(this.taskList.toString());
     }
 
+    /**
+     * Adds a task to the chalk object
+     *
+     * @param newTask The new task to be added
+     */
     public void addTask(Task newTask) {
         try {
             this.storage.addTask(newTask);
@@ -71,6 +106,12 @@ public class Chalk {
         }
     }
 
+    /**
+     * Marks the corresponding task as done
+     *
+     * @param taskNumber The 1-indexed position of the task to be marked as done
+     * (i.e. the first task is 1)
+     */
     public void markTaskAsDone(int taskNumber) {
         try {
             Task task = this.taskList.markAsDone(taskNumber);
@@ -86,6 +127,12 @@ public class Chalk {
         }
     }
 
+    /**
+     * Unmarks the corresponding task
+     *
+     * @param taskNumber The 1-indexed position of the task to be unmarked (i.e.
+     * the first task is 1)
+     */
     public void unmarkTaskAsDone(int taskNumber) {
         try {
             Task task = this.taskList.unmarkAsDone(taskNumber);
@@ -100,6 +147,12 @@ public class Chalk {
         }
     }
 
+    /**
+     * Deletes the corresponding task
+     *
+     * @param taskNumber The 1-indexed position of the task to be deleted (i.e.
+     * the first task is 1)
+     */
     public void deleteTask(int taskNumber) {
         try {
             Task task = this.taskList.deleteTask(taskNumber);

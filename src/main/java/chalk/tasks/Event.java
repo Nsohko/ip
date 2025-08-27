@@ -4,15 +4,32 @@ import chalk.datetime.DateTime;
 
 public class Event extends Task {
 
+    /**
+     * The start time of this Event
+     */
     private final DateTime startTime;
+
+    /**
+     * The end time of this event
+     */
     private final DateTime endTime;
 
+    /**
+     * Constructor for Event object
+     *
+     * @param taskName The name of the Event
+     * @param startTime The start time of this Event
+     * @param endTime The end time of this event
+     */
     public Event(String taskName, DateTime startTime, DateTime endTime) {
         super(taskName);
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[E]" + super.toString()
@@ -20,6 +37,9 @@ public class Event extends Task {
                 + " to: " + this.endTime.toString() + ")";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileStorage() {
         return "event " + this.getName()

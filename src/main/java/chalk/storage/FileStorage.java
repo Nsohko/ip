@@ -10,12 +10,26 @@ import chalk.tasks.TaskList;
 
 public class FileStorage {
 
+    /**
+     * The path to the storage file
+     */
     private final String storagePath;
 
+    /**
+     * Constructor for FileStorage object
+     *
+     * @param storagePath The path to the storage file
+     */
     public FileStorage(String storagePath) {
         this.storagePath = storagePath;
     }
 
+    /**
+     * Load the TaskList based on the information currently stored in the
+     * storage file If the storage file does not exist yet, it will create it
+     *
+     * @throws IOException If unable to parse the file as Task data
+     */
     public TaskList load() throws IOException {
         File storage = new File(this.storagePath);
         if (!storage.exists()) {
@@ -54,6 +68,11 @@ public class FileStorage {
         return taskList;
     }
 
+    /**
+     * Adds a new task to the file storage via append
+     *
+     * @param task The new task to be added to the file storage
+     */
     public void addTask(Task task) throws IOException {
         try (FileWriter fw = new FileWriter(this.storagePath, true)) {
             fw.write(task.toFileStorage() + "\n");
@@ -62,6 +81,11 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Overwrites the file storage with Task data stored in a TaskList
+     *
+     * @param taskList The TaskList used to overwrite the file storage
+     */
     public void overWriteWithTaskList(TaskList taskList) throws IOException {
         try (FileWriter fw = new FileWriter(this.storagePath)) {
             fw.write(taskList.toFileStorage());
