@@ -1,12 +1,13 @@
 package chalk.storage;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -49,10 +50,10 @@ class FileStorageTest {
         // Light-touch checks via string output (keeps it simple)
         String printed = list.toString();
         assertEquals("""
-        1. [T][ ] buy milk
-        2. [D][X] return book (by: 6 June 2025 1820hrs)
-        3. [E][ ] project meeting (from: 1 January 2025 0900hrs to: 1 January 2025 1000hrs)
-        """, printed);
+            1. [T][ ] buy milk
+            2. [D][X] return book (by: 6 June 2025 1820hrs)
+            3. [E][ ] project meeting (from: 1 January 2025 0900hrs to: 1 January 2025 1000hrs)
+            """, printed);
     }
 
     @Test

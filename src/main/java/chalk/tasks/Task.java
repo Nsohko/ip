@@ -156,7 +156,6 @@ public abstract class Task implements Storable {
                     dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
                     """);
             }
-
             return new Event(taskName, startTime, endTime);
         }
         throw new IllegalArgumentException("Unknown Command: " + inputCommand);

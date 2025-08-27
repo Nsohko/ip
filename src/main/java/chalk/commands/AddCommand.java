@@ -33,7 +33,5 @@ public class AddCommand extends ChalkCommand {
         } catch (IllegalArgumentException e) {
             chalk.ui.printError(e.getMessage());
         }
-
     }
-
 }

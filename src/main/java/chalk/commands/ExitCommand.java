@@ -13,5 +13,4 @@ public class ExitCommand extends ChalkCommand {
     public void execute(Chalk chalk) {
         chalk.terminate();
     }
-
 }

@@ -57,5 +57,4 @@ public abstract class ChalkCommand {
             return new AddCommand(input);
         }
     }
-
 }

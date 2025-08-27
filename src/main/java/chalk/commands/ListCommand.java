@@ -13,5 +13,4 @@ public class ListCommand extends ChalkCommand {
     public void execute(Chalk chalk) {
         chalk.listTasks();
     }
-
 }
