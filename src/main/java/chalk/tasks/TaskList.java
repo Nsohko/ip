@@ -48,6 +48,18 @@ public class TaskList {
         return this.taskList.size();
     }
 
+    public TaskList searchTasks(String searchParam) {
+        TaskList filteredList = new TaskList();
+
+        for (Task t : this.taskList) {
+            if (t.getName().contains(searchParam)) {
+                filteredList.addTask(t);
+            }
+        }
+
+        return filteredList;
+    }
+
     @Override
     public String toString() {
         String res = "";

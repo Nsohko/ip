@@ -10,6 +10,7 @@ public abstract class ChalkCommand {
     private static final String MARK_TASK_AS_DONE_STRING = "mark "; // matches string that starts with "mark " 
     private static final String UNMARK_TASK_AS_DONE_STRING = "unmark "; // matches string that starts with "unmark " 
     private static final String DELETE_TASK_STRING = "delete "; // matches string that starts with "delete "
+    private static final String FIND_TASK_STRING = "find ";
 
     public abstract void execute (Chalk chalk);
 
@@ -25,6 +26,8 @@ public abstract class ChalkCommand {
             return new UnmarkDoneCommand(input);
         } else if (input.startsWith(DELETE_TASK_STRING)) {
             return new DeleteCommand(input);
+        } else if (input.startsWith(FIND_TASK_STRING)) {
+            return new FindCommand(input);
         } else {
             return new AddCommand(input);
         }

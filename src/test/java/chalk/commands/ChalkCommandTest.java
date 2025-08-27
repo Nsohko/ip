@@ -37,6 +37,12 @@ class ChalkCommandParseSimpleTest {
         assertTrue(cmd instanceof DeleteCommand);
     }
 
+    @Test
+    void parse_findWithArg_returnsFindCommand() {
+        ChalkCommand cmd = ChalkCommand.parse("find abc");
+        assertTrue(cmd instanceof FindCommand);
+    }
+
     // --- Prefix tokens with trailing space but no argument ---
     @Test
     void parse_markSpace_returnsMarkDoneCommand() {
@@ -54,6 +60,12 @@ class ChalkCommandParseSimpleTest {
     void parse_deleteSpace_returnsDeleteCommand() {
         ChalkCommand cmd = ChalkCommand.parse("delete ");
         assertTrue(cmd instanceof DeleteCommand);
+    }
+
+    @Test
+    void parse_findSpace_returnsFindCommand() {
+        ChalkCommand cmd = ChalkCommand.parse("find ");
+        assertTrue(cmd instanceof FindCommand);
     }
 
     // --- Fallbacks to AddCommand ---

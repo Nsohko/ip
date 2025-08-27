@@ -115,6 +115,22 @@ public class Chalk {
         }
     }
 
+    public void searchTasks(String searchParam) {
+
+        TaskList filteredTaskList = this.taskList.searchTasks(searchParam);
+
+        String message;
+        if (filteredTaskList.size() == 0) {
+            message = "No tasks found!";
+        } else {
+            message = """
+                Here are the matching tasks in your list:
+                %s
+                """.formatted(filteredTaskList.toString());
+        }
+        this.ui.reply(message);
+    }
+
     public static void main(String[] args) {
 
         Chalk chalk = new Chalk();
