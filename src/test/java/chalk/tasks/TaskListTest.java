@@ -55,8 +55,7 @@ class TaskListTest {
         TaskList list = new TaskList();
         list.addTask(new TaskStub("task1"));
 
-        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class,
-                () -> list.markAsDone(2));
+        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> list.markAsDone(2));
 
         assertEquals("There is no task with that number!", ex.getMessage());
     }
@@ -66,8 +65,7 @@ class TaskListTest {
         TaskList list = new TaskList();
         list.addTask(new TaskStub("task1"));
 
-        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class,
-                () -> list.unmarkAsDone(-1));
+        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> list.unmarkAsDone(-1));
 
         assertEquals("There is no task with that number!", ex.getMessage());
     }
@@ -77,8 +75,7 @@ class TaskListTest {
         TaskList list = new TaskList();
         list.addTask(new TaskStub("task1"));
 
-        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class,
-                () -> list.deleteTask(-1));
+        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> list.deleteTask(-1));
 
         assertEquals("There is no task with that number!", ex.getMessage());
     }
@@ -94,7 +91,7 @@ class TaskListTest {
             1. [ ] task1
             2. [X] task2
             """,
-                 list.toString());
+                list.toString());
     }
 
     @Test
@@ -108,6 +105,6 @@ class TaskListTest {
             task1 | 0
             task2 | 1
             """,
-                 list.toFileStorage());
+                list.toFileStorage());
     }
 }

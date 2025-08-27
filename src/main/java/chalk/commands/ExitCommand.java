@@ -5,8 +5,7 @@ import chalk.Chalk;
 public class ExitCommand extends ChalkCommand {
 
     @Override
-    public void execute (Chalk chalk) {
+    public void execute(Chalk chalk) {
         chalk.terminate();
     }
-    
 }

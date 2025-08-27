@@ -17,8 +17,8 @@ class TaskTest {
 
     @Test
     void fromInputCommand_todoEmptyName_throws() {
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("todo   "));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("todo   "));
 
         assertEquals("""
                     Todo task name cannot be empty.
@@ -45,16 +45,16 @@ class TaskTest {
                             Usage: deadline [taskName] /by [dueDate]
                             """;
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("deadline finish hw"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("deadline finish hw"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("deadline  /by 6/6/2025 1820"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("deadline  /by 6/6/2025 1820"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("deadline finish hw /by   "));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("deadline finish hw /by   "));
         assertEquals(expectedError, ex.getMessage());
     }
 
@@ -69,12 +69,12 @@ class TaskTest {
                         """;
 
         // wrong format (colons) or impossible date
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("deadline a /by abcs"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("deadline a /by abcs"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("deadline a /by 1233"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("deadline a /by 1233"));
         assertEquals(expectedError, ex.getMessage());
     }
 
@@ -105,20 +105,20 @@ class TaskTest {
                         """;
 
         // Missing /from and /to or empty segments
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("event meeting"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("event meeting"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("event  /from 1/1/2025 0900 /to 1/1/2025 1000"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("event  /from 1/1/2025 0900 /to 1/1/2025 1000"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("event meeting /from   /to 1/1/2025 1000"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("event meeting /from   /to 1/1/2025 1000"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("event meeting /from 1/1/2025 0900 /to   "));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("event meeting /from 1/1/2025 0900 /to   "));
         assertEquals(expectedError, ex.getMessage());
     }
 
@@ -131,12 +131,12 @@ class TaskTest {
                         dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
                         """;
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("event x /from 2025-01-01 0900 /to 1/1/2025 1000"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("event x /from 2025-01-01 0900 /to 1/1/2025 1000"));
         assertEquals(expectedError, ex.getMessage());
 
-        ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("event x /from 1/1/2025 0900 /to 2025-01-01 1000"));
+        ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("event x /from 1/1/2025 0900 /to 2025-01-01 1000"));
         assertEquals(expectedError, ex.getMessage());
 
         assertEquals(expectedError, ex.getMessage());
@@ -145,8 +145,8 @@ class TaskTest {
     // --- Factory: unknown ---
     @Test
     void fromInputCommand_unknownCommand_throws() {
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
-                () -> Task.fromInputCommand("remind me to sleep"));
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, ()
+                -> Task.fromInputCommand("remind me to sleep"));
         assertTrue(ex.getMessage().contains("Unknown Command"));
     }
 }

@@ -1,4 +1,3 @@
-// src/test/java/chalk/ui/UiTest.java
 package chalk.ui;
 
 import java.io.ByteArrayOutputStream;
@@ -11,11 +10,11 @@ import org.junit.jupiter.api.Test;
 
 class UiTest {
 
+    private static final String LINE = "-------------------------------";
+    private static final String NL = System.lineSeparator();
+
     private final PrintStream originalOut = System.out;
     private ByteArrayOutputStream outContent;
-
-    private static final String NL = System.lineSeparator();
-    private static final String LINE = "-------------------------------";
 
     @BeforeEach
     @SuppressWarnings("unused")
@@ -44,8 +43,7 @@ class UiTest {
         Ui ui = new Ui();
         ui.reply("Hello\nWorld");
 
-        String expected
-                = LINE + NL
+        String expected = LINE + NL
                 + "    Hello" + NL
                 + "    World" + NL
                 + LINE + NL;
@@ -58,8 +56,7 @@ class UiTest {
         Ui ui = new Ui();
         ui.printError("Something went wrong\nPlease retry");
 
-        String expected
-                = LINE + NL
+        String expected = LINE + NL
                 + "    ERROR!" + NL
                 + "    Something went wrong" + NL
                 + "    Please retry" + NL
@@ -73,8 +70,7 @@ class UiTest {
         Ui ui = new Ui();
         ui.printError(null);
 
-        String expected
-                = LINE + NL
+        String expected = LINE + NL
                 + "    ERROR!" + NL
                 + LINE + NL;
 
@@ -86,8 +82,7 @@ class UiTest {
         Ui ui = new Ui();
         ui.reply("Hello");
 
-        String expected
-                = LINE + NL
+        String expected = LINE + NL
                 + "    Hello" + NL
                 + LINE + NL;
 

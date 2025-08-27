@@ -27,7 +27,7 @@ public class TaskList {
     // taskNumber is 1-indexed
     public Task unmarkAsDone(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
-             throw new IndexOutOfBoundsException("There is no task with that number!");
+            throw new IndexOutOfBoundsException("There is no task with that number!");
         }
         Task task = this.taskList.get(taskNumber - 1);
         task.unmarkAsDone();
@@ -35,7 +35,7 @@ public class TaskList {
     }
 
     // taskNumber is 1-indexed
-    public Task deleteTask (int taskNumber) throws IndexOutOfBoundsException {
+    public Task deleteTask(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
             throw new IndexOutOfBoundsException("There is no task with that number!");
         }

@@ -11,7 +11,7 @@ public class DeleteCommand extends ChalkCommand {
     }
 
     @Override
-    public void execute (Chalk chalk) {
+    public void execute(Chalk chalk) {
         try {
             // taskNumber is 1-indexed
             int taskNumber = Integer.parseInt(this.inputCommand.split(" ")[1]);
@@ -22,7 +22,7 @@ public class DeleteCommand extends ChalkCommand {
                 Usage: delete [taskNumber]
                 """);
         }
-        
+
     }
-    
+
 }

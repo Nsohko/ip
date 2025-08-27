@@ -8,10 +8,9 @@ public class DateTime {
 
     private final LocalDateTime dateTime;
 
-    public DateTime (String input) throws DateTimeParseException {
+    public DateTime(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         LocalDateTime parsedDateTime = LocalDateTime.parse(input, formatter);
-        
         this.dateTime = parsedDateTime;
     }
 

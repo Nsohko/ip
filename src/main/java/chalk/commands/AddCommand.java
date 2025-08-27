@@ -12,14 +12,12 @@ public class AddCommand extends ChalkCommand {
     }
 
     @Override
-    public void execute (Chalk chalk) {
+    public void execute(Chalk chalk) {
         try {
             Task newTask = Task.fromInputCommand(inputCommand);
             chalk.addTask(newTask);
         } catch (IllegalArgumentException e) {
             chalk.ui.printError(e.getMessage());
         }
-       
-    }  
-    
+    }
 }

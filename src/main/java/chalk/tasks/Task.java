@@ -34,7 +34,6 @@ public abstract class Task {
                 + this.taskName;
     }
 
-
     public String toFileStorage() {
         String completionStatus = this.isDone ? "1" : "0";
         return " | " + completionStatus;
@@ -62,7 +61,7 @@ public abstract class Task {
             String[] parts = inputCommand.substring(9).split(" /by ", 2);
 
             if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
-                 throw new IllegalArgumentException("""
+                throw new IllegalArgumentException("""
                         Deadline task name and due date cannot be empty.
                         Usage: deadline [taskName] /by [dueDate]
                         """);
@@ -74,7 +73,7 @@ public abstract class Task {
             try {
                 deadlineTime = new DateTime(parts[1]);
             } catch (DateTimeParseException e) {
-                  throw new IllegalArgumentException("""
+                throw new IllegalArgumentException("""
                         Provide deadline due date in the following format:
                         dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
                         """);
@@ -89,10 +88,10 @@ public abstract class Task {
 
             // index of the /from and /to commands
             int fromIndex = input.indexOf(" /from ");
-            int toIndex   = input.indexOf(" /to ");
+            int toIndex = input.indexOf(" /to ");
 
             if (taskName.trim().isEmpty() || fromIndex == -1 || toIndex == -1) {
-                 throw new IllegalArgumentException("""
+                throw new IllegalArgumentException("""
                         Event task name, start time and end time cannot be empty.
                         Usage: event [eventName] /from [startTime] /to [endTime]
                         """);
@@ -110,20 +109,19 @@ public abstract class Task {
                         Usage: event [eventName] /from [startTime] /to [endTime]
                         """);
             }
-            
+
             DateTime startTime;
             DateTime endTime;
             try {
                 startTime = new DateTime(startTimeString);
                 endTime = new DateTime(endTimeString);
-                
+
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException("""
                     Provide event start and end time in the following format:
                     dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
                     """);
             }
-            
             return new Event(taskName, startTime, endTime);
         }
         throw new IllegalArgumentException("Unknown Command: " + inputCommand);

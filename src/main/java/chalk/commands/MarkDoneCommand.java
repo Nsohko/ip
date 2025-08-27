@@ -10,19 +10,18 @@ public class MarkDoneCommand extends ChalkCommand {
         this.inputCommand = inputCommand;
     }
 
-
     @Override
-    public void execute (Chalk chalk) {
+    public void execute(Chalk chalk) {
         try {
-             // taskNumber is 1-indexed
+            // taskNumber is 1-indexed
             int taskNumber = Integer.parseInt(inputCommand.split(" ")[1]);
             chalk.markTaskAsDone(taskNumber);
         } catch (NumberFormatException e) {
-             chalk.ui.printError("""
+            chalk.ui.printError("""
                 Invalid task number!
                 Usage: mark [taskNumber]
                 """);
         }
     }
-    
+
 }
