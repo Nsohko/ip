@@ -6,17 +6,33 @@ import chalk.storage.Storable;
 
 public class TaskList implements Storable {
 
+    /**
+     * Array List used to actually store the tasks
+     */
     private final ArrayList<Task> taskList;
 
+    /**
+     * Constructor for TaskList object
+     */
     public TaskList() {
         this.taskList = new ArrayList<>();
     }
 
+    /**
+     * Adds a task into the taskList
+     *
+     * @param t The new task to be added to the task list
+     */
     public void addTask(Task t) {
         this.taskList.add(t);
     }
 
-    // taskNumber is 1-indexed
+    /**
+     * Marks the corresponding task in the taskList as done
+     *
+     * @param taskNumber The 1-indexed position of the task to be marked as done
+     * (i.e. the first task is 1)
+     */
     public Task markAsDone(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
             throw new IndexOutOfBoundsException("There is no task with that number!");
@@ -26,7 +42,12 @@ public class TaskList implements Storable {
         return task;
     }
 
-    // taskNumber is 1-indexed
+    /**
+     * Unmarks the corresponding task in the taskList
+     *
+     * @param taskNumber The 1-indexed position of the task to be unmarked (i.e.
+     * the first task is 1)
+     */
     public Task unmarkAsDone(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
             throw new IndexOutOfBoundsException("There is no task with that number!");
@@ -36,7 +57,12 @@ public class TaskList implements Storable {
         return task;
     }
 
-    // taskNumber is 1-indexed
+    /**
+     * Deletes the corresponding task in the taskList
+     *
+     * @param taskNumber The 1-indexed position of the task to be deleted (i.e.
+     * the first task is 1)
+     */
     public Task deleteTask(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
             throw new IndexOutOfBoundsException("There is no task with that number!");
@@ -50,6 +76,9 @@ public class TaskList implements Storable {
         return this.taskList.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         String res = "";
@@ -63,6 +92,9 @@ public class TaskList implements Storable {
         return res;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileStorage() {
         String res = "";

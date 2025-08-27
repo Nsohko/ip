@@ -8,8 +8,19 @@ import chalk.storage.Storable;
 
 public class DateTime implements Storable {
 
+    /**
+     * The LocalDateTime containing this object's dateTime
+     */
     private final LocalDateTime dateTime;
 
+    /**
+     * Constructor for DateTime object
+     *
+     * @param input The string in d/M/yyyy format to be stored (e.g 21/10/2003
+     * 1820)
+     * @throws DateTimeParseException If input is unable to be parsed into a
+     * LocalDateTime object
+     */
     public DateTime(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         LocalDateTime parsedDateTime = LocalDateTime.parse(input, formatter);
@@ -17,12 +28,18 @@ public class DateTime implements Storable {
         this.dateTime = parsedDateTime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM uuuu HHmm'hrs'");
         return this.dateTime.format(formatter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toFileStorage() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
