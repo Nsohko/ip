@@ -79,6 +79,21 @@ public class TaskList implements Storable {
     /**
      * {@inheritDoc}
      */
+    public TaskList searchTasks(String searchParam) {
+        TaskList filteredList = new TaskList();
+
+        for (Task t : this.taskList) {
+            if (t.getName().contains(searchParam)) {
+                filteredList.addTask(t);
+            }
+        }
+
+        return filteredList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         String res = "";

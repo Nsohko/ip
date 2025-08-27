@@ -51,6 +51,24 @@ class TaskListTest {
     }
 
     @Test
+    void findTask_returnsCorrectTask() {
+        TaskList list = new TaskList();
+        list.addTask(new TaskStub("book1"));
+        list.addTask(new TaskStub("abc"));
+        list.addTask(new TaskStub("book2"));
+
+        TaskList filteredList = list.searchTasks("book");
+
+        String expected = """
+                1. [ ] book1
+                2. [ ] book2
+                """;
+
+        assertEquals(expected, filteredList.toString());
+        
+    }
+
+    @Test
     void markAsDone_invalidTaskNumber_throwsException() {
         TaskList list = new TaskList();
         list.addTask(new TaskStub("task1"));
@@ -78,6 +96,18 @@ class TaskListTest {
         IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class, () -> list.deleteTask(-1));
 
         assertEquals("There is no task with that number!", ex.getMessage());
+    }
+
+    @Test
+    void findTasks_noResult() {
+        TaskList list = new TaskList();
+        list.addTask(new TaskStub("book1"));
+        list.addTask(new TaskStub("abc"));
+        list.addTask(new TaskStub("book2"));
+
+        TaskList filteredList = list.searchTasks("test");
+
+        assertEquals(0, filteredList.size());
     }
 
     @Test

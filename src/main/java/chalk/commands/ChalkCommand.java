@@ -4,30 +4,23 @@ import chalk.Chalk;
 
 public abstract class ChalkCommand {
 
-    /**
-     * Flag for ExitCommand
-     */
+    /** Flag for ExitCommand */
     private static final String END_CONVERSATION_STRING = "bye";
 
-    /**
-     * Flag for ListCommand
-     */
+    /** Flag for ListCommand */
     private static final String LIST_TASKS_STRING = "list";
 
-    /**
-     * Flag for MarkDoneCommand
-     */
+    /** Flag for MarkDoneCommand */
     private static final String MARK_TASK_AS_DONE_STRING = "mark ";
 
-    /**
-     * Flag for UnmarkDoneCommand
-     */
+    /** Flag for UnmarkDoneCommand */
     private static final String UNMARK_TASK_AS_DONE_STRING = "unmark ";
 
-    /**
-     * Flag for DeleteCommand
-     */
+    /** Flag for DeleteCommand */
     private static final String DELETE_TASK_STRING = "delete ";
+
+    /** Flag for FindCommand */
+    private static final String FIND_TASK_STRING = "find ";
 
     /**
      * Executes some behaviour of the Chalk object based on the specific command
@@ -53,6 +46,8 @@ public abstract class ChalkCommand {
             return new UnmarkDoneCommand(input);
         } else if (input.startsWith(DELETE_TASK_STRING)) {
             return new DeleteCommand(input);
+        } else if (input.startsWith(FIND_TASK_STRING)) {
+            return new FindCommand(input);
         } else {
             return new AddCommand(input);
         }
