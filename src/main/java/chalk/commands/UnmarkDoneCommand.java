@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The UnmarkDoneCommand class represents a command to unmark a task as done in the Chalk object.
+ */
 public class UnmarkDoneCommand extends ChalkCommand {
 
     /**

@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The DeleteCommand class represents a command to delete a task from the Chalk object.
+ */
 public class DeleteCommand extends ChalkCommand {
 
     /**

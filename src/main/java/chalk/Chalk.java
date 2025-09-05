@@ -9,6 +9,9 @@ import chalk.tasks.Task;
 import chalk.tasks.TaskList;
 import chalk.ui.Ui;
 
+/**
+ * The Chalk class is the main class of the Chalk application.
+ */
 public class Chalk {
 
     /**
@@ -39,7 +42,7 @@ public class Chalk {
     /**
      * Boolean representing whether or not this Chalk object is running
      */
-    private boolean running;
+    private boolean isRunning;
 
     /**
      * Initializes the Chalk object, and starts its running If an error occurs
@@ -64,7 +67,7 @@ public class Chalk {
             """.formatted(Chalk.NAME);
 
         this.ui.reply(message);
-        this.running = true;
+        this.isRunning = true;
     }
 
     /**
@@ -74,7 +77,7 @@ public class Chalk {
         String message = "Bye. Hope to see you again soon!";
         this.ui.reply(message);
 
-        this.running = false;
+        this.isRunning = false;
     }
 
     /**
@@ -110,7 +113,7 @@ public class Chalk {
      * Marks the corresponding task as done
      *
      * @param taskNumber The 1-indexed position of the task to be marked as done
-     * (i.e. the first task is 1)
+     *     (i.e. the first task is 1)
      */
     public void markTaskAsDone(int taskNumber) {
         try {
@@ -130,8 +133,8 @@ public class Chalk {
     /**
      * Unmarks the corresponding task
      *
-     * @param taskNumber The 1-indexed position of the task to be unmarked (i.e.
-     * the first task is 1)
+     * @param taskNumber The 1-indexed position of the task to be unmarked
+     *     (i.e. the first task is 1)
      */
     public void unmarkTaskAsDone(int taskNumber) {
         try {
@@ -150,8 +153,8 @@ public class Chalk {
     /**
      * Deletes the corresponding task
      *
-     * @param taskNumber The 1-indexed position of the task to be deleted (i.e.
-     * the first task is 1)
+     * @param taskNumber The 1-indexed position of the task to be deleted
+     *     (i.e. the first task is 1)
      */
     public void deleteTask(int taskNumber) {
         try {
@@ -196,7 +199,7 @@ public class Chalk {
         try (Scanner s = new Scanner(System.in)) {
             String userInput;
 
-            while (chalk.running && s.hasNext()) {
+            while (chalk.isRunning && s.hasNext()) {
                 userInput = s.nextLine();
                 ChalkCommand command = ChalkCommand.parse(userInput);
                 command.execute(chalk);

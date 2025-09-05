@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import chalk.storage.Storable;
 
+/**
+ * The TaskList class is a wrapper around an ArrayList of Tasks, and provides
+ * methods to manipulate the list of tasks.
+ */
 public class TaskList implements Storable {
 
     /**
@@ -31,7 +35,7 @@ public class TaskList implements Storable {
      * Marks the corresponding task in the taskList as done
      *
      * @param taskNumber The 1-indexed position of the task to be marked as done
-     * (i.e. the first task is 1)
+     *     (i.e. the first task is 1)
      */
     public Task markAsDone(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
@@ -45,8 +49,8 @@ public class TaskList implements Storable {
     /**
      * Unmarks the corresponding task in the taskList
      *
-     * @param taskNumber The 1-indexed position of the task to be unmarked (i.e.
-     * the first task is 1)
+     * @param taskNumber The 1-indexed position of the task to be unmarked
+     *     (i.e. the first task is 1)
      */
     public Task unmarkAsDone(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {
@@ -60,8 +64,8 @@ public class TaskList implements Storable {
     /**
      * Deletes the corresponding task in the taskList
      *
-     * @param taskNumber The 1-indexed position of the task to be deleted (i.e.
-     * the first task is 1)
+     * @param taskNumber The 1-indexed position of the task to be deleted
+     *     (i.e. the first task is 1)
      */
     public Task deleteTask(int taskNumber) throws IndexOutOfBoundsException {
         if (taskNumber > this.taskList.size() || taskNumber <= 0) {

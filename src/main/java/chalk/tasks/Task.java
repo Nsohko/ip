@@ -5,6 +5,9 @@ import java.time.format.DateTimeParseException;
 import chalk.datetime.DateTime;
 import chalk.storage.Storable;
 
+/**
+ * The Task class is the base class for all tasks in Chalk.
+ */
 public abstract class Task implements Storable {
 
     /**

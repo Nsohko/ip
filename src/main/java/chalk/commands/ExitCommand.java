@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The ExitCommand class represents a command to exit the Chalk application.
+ */
 public class ExitCommand extends ChalkCommand {
 
     /**
