@@ -6,6 +6,10 @@ import java.time.format.DateTimeParseException;
 
 import chalk.storage.Storable;
 
+/**
+ * The DateTime class represents a date and time in Chalk.
+ * It is a wrapper around the LocalDateTime class.
+ */
 public class DateTime implements Storable {
 
     /**
@@ -16,10 +20,10 @@ public class DateTime implements Storable {
     /**
      * Constructor for DateTime object
      *
-     * @param input The string in d/M/yyyy format to be stored (e.g 21/10/2003
-     * 1820)
+     * @param input The string in d/M/yyyy format to be stored
+     *     (e.g 21/10/2003 1820)
      * @throws DateTimeParseException If input is unable to be parsed into a
-     * LocalDateTime object
+     *     LocalDateTime object
      */
     public DateTime(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");

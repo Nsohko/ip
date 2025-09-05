@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The MarkDoneCommand class represents a command to mark a task as done in the Chalk object.
+ */
 public class MarkDoneCommand extends ChalkCommand {
 
     /**

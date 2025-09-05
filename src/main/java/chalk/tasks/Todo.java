@@ -1,5 +1,8 @@
 package chalk.tasks;
 
+/**
+ * The Todo class represents a Todo task in Chalk.
+ */
 public class Todo extends Task {
 
     /**

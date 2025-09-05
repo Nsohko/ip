@@ -1,5 +1,8 @@
 package chalk.ui;
 
+/**
+ * The UI class is reponsible for managing Chalk's interactions with the user.
+ */
 public class Ui {
 
     /**

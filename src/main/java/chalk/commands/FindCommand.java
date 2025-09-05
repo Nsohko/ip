@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The FindCommand class represents a command to find tasks in the Chalk object.
+ */
 public class FindCommand extends ChalkCommand {
 
     /**

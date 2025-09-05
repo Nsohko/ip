@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The ChalkCommand class is the base class for all commands in Chalk.
+ */
 public abstract class ChalkCommand {
 
     /** Flag for ExitCommand */

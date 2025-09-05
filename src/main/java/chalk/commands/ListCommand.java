@@ -2,6 +2,9 @@ package chalk.commands;
 
 import chalk.Chalk;
 
+/**
+ * The ListCommand class represents a command to list all tasks in the Chalk object.
+ */
 public class ListCommand extends ChalkCommand {
 
     /**

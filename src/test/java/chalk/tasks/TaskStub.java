@@ -1,10 +1,21 @@
 package chalk.tasks;
 
+/**
+ * A stub class for Task to be used in testing.
+ */
 public class TaskStub extends Task {
 
-    private boolean done = false;
+    /**
+     * isDone represents whether or not the task has been finished
+     */
+    private boolean isDone = false;
     private final String name;
 
+    /**
+     * Base constructor for Task Stub
+     *
+     * @param name The name of the Task
+     */
     public TaskStub(String name) {
         super(name);
         this.name = name;
@@ -12,25 +23,25 @@ public class TaskStub extends Task {
 
     @Override
     public void markAsDone() {
-        done = true;
+        this.isDone = true;
     }
 
     @Override
     public void unmarkAsDone() {
-        done = false;
+        this.isDone = false;
     }
 
     public boolean isDone() {
-        return this.done;
+        return this.isDone;
     }
 
     @Override
     public String toString() {
-        return (done ? "[X] " : "[ ] ") + name;
+        return (this.isDone ? "[X] " : "[ ] ") + name;
     }
 
     @Override
     public String toFileStorage() {
-        return name + " | " + (done ? "1" : "0");
+        return name + " | " + (this.isDone ? "1" : "0");
     }
 }

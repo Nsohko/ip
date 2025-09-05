@@ -1,5 +1,8 @@
 package chalk.storage;
 
+/**
+ * The Storable interface represents an object that can be stored in a file.
+ */
 public interface Storable {
 
     /**

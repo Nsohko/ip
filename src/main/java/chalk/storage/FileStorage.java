@@ -8,6 +8,9 @@ import java.util.Scanner;
 import chalk.tasks.Task;
 import chalk.tasks.TaskList;
 
+/**
+ * The FileStorage class is responsible for managing the storage of tasks in a file.
+ */
 public class FileStorage {
 
     /**

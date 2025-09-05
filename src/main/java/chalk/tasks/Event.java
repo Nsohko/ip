@@ -2,6 +2,10 @@ package chalk.tasks;
 
 import chalk.datetime.DateTime;
 
+/**
+ * The Event class represents an Event task in Chalk.
+ * An Event has a name, a start time and an end time.
+ */
 public class Event extends Task {
 
     /**

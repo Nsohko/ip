@@ -2,6 +2,10 @@ package chalk.tasks;
 
 import chalk.datetime.DateTime;
 
+/**
+ * The Deadline class represents a Deadline task in Chalk.
+ * A Deadline has a name and a due date.
+ */
 public class Deadline extends Task {
 
     /**

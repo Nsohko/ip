@@ -3,6 +3,9 @@ package chalk.commands;
 import chalk.Chalk;
 import chalk.tasks.Task;
 
+/**
+ * AddCommand represents a command to add a task to the Chalk object.
+ */
 public class AddCommand extends ChalkCommand {
 
     /**
