@@ -42,7 +42,7 @@ public class FindCommand extends ChalkCommand {
     @Override
     public void execute(Chalk chalk, GuiUI guiUI) {
         // skip 5 chars ("find ")
-        String searchParam = this.inputCommand.substring(5);
-        chalk.searchTasks(searchParam, guiUI);
+        String[] searchParams = this.inputCommand.substring(5).split(" ");
+        chalk.searchTasks(guiUI, searchParams);
     }
 }
