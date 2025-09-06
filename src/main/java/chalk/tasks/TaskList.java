@@ -81,16 +81,19 @@ public class TaskList implements Storable {
     }
 
     /**
-     * Searches for tasks whose names contains searchParam
+     * Searches for tasks whose names contains any string from searchParams
      *
-     * @param searchParam The search parameter
+     * @param searchParams The search parameters
      */
-    public TaskList searchTasks(String searchParam) {
+    public TaskList searchTasks(String... searchParams) {
         TaskList filteredList = new TaskList();
 
         for (Task t : this.taskList) {
-            if (t.getName().contains(searchParam)) {
-                filteredList.addTask(t);
+            for (String searchTerm: searchParams) {
+                if (t.getName().contains(searchTerm)) {
+                    filteredList.addTask(t);
+                    break;
+                }
             }
         }
 

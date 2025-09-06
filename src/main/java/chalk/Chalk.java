@@ -331,12 +331,13 @@ public class Chalk {
     /**
      * Searches for tasks whose name contains searchParam
      * Prints to JavaFX
+     * Note that the order of params is swapped (guiUI first to allow for varargs)
      *
      * @param searchParam The search parameter to match tasks' names against
      */
-    public void searchTasks(String searchParam, GuiUI guiUI) {
+    public void searchTasks(GuiUI guiUI, String... searchParams) {
 
-        TaskList filteredTaskList = this.taskList.searchTasks(searchParam);
+        TaskList filteredTaskList = this.taskList.searchTasks(searchParams);
 
         String message;
         if (filteredTaskList.size() == 0) {

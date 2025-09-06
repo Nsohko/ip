@@ -48,7 +48,7 @@ checkstyle {
 }
 
 application {
-    mainClass.set("chalk.ui.GUILauncher")
+    mainClass.set("chalk.ui.GuiLauncher")
 }
 
 shadowJar {
