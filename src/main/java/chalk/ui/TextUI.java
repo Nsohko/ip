@@ -1,9 +1,9 @@
 package chalk.ui;
 
 /**
- * The UI class is reponsible for managing Chalk's interactions with the user.
+ * The TextUI class is reponsible for managing Chalk's interactions with the user on the CLI.
  */
-public class Ui {
+public class TextUI {
 
     /**
      * Line Break used to wrap Chalk's outputs
@@ -17,7 +17,7 @@ public class Ui {
      */
     public void reply(String sentenceString) {
 
-        System.out.println(Ui.LINE_BREAK);
+        System.out.println(TextUI.LINE_BREAK);
 
         // split each line based on new line character, then prepend 4 spaces
         // not the best solution, because it doesnt account for when long lines wrap around
@@ -26,7 +26,7 @@ public class Ui {
             System.out.println("    " + line);
         }
 
-        System.out.println(Ui.LINE_BREAK);
+        System.out.println(TextUI.LINE_BREAK);
     }
 
     /**
@@ -36,14 +36,14 @@ public class Ui {
      */
     public void printError(String sentenceString) {
 
-        System.out.println(Ui.LINE_BREAK);
+        System.out.println(TextUI.LINE_BREAK);
         System.out.println("    ERROR!");
         if (sentenceString != null) {
             for (String line : sentenceString.split("\n")) {
                 System.out.println("    " + line);
             }
         }
-        System.out.println(Ui.LINE_BREAK);
+        System.out.println(TextUI.LINE_BREAK);
     }
 
 }

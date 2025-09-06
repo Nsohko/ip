@@ -9,7 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class UiTest {
+class TextUiTest {
 
     private static final String LINE = "-------------------------------";
     private static final String NL = System.lineSeparator();
@@ -41,7 +41,7 @@ class UiTest {
 
     @Test
     void reply_printsBoundedBlock_withEachLineIndented() {
-        Ui ui = new Ui();
+        TextUI ui = new TextUI();
         ui.reply("Hello\nWorld");
 
         String expected = LINE + NL
@@ -54,7 +54,7 @@ class UiTest {
 
     @Test
     void printError_withMessage_printsErrorHeaderAndMessage() {
-        Ui ui = new Ui();
+        TextUI ui = new TextUI();
         ui.printError("Something went wrong\nPlease retry");
 
         String expected = LINE + NL
@@ -68,7 +68,7 @@ class UiTest {
 
     @Test
     void printError_withNullMessage_printsOnlyHeader() {
-        Ui ui = new Ui();
+        TextUI ui = new TextUI();
         ui.printError(null);
 
         String expected = LINE + NL
@@ -80,7 +80,7 @@ class UiTest {
 
     @Test
     void reply_handlesSingleLine_correctFormat() {
-        Ui ui = new Ui();
+        TextUI ui = new TextUI();
         ui.reply("Hello");
 
         String expected = LINE + NL

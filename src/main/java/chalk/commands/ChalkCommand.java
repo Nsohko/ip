@@ -1,6 +1,7 @@
 package chalk.commands;
 
 import chalk.Chalk;
+import chalk.ui.GuiUI;
 
 /**
  * The ChalkCommand class is the base class for all commands in Chalk.
@@ -32,6 +33,12 @@ public abstract class ChalkCommand {
     public abstract void execute(Chalk chalk);
 
     /**
+     * Executes some behaviour of the Chalk object based on the specific command
+     * that invokes it, and prints to javaFX UI
+     */
+    public abstract void execute(Chalk chalk, GuiUI guiUI);
+
+    /**
      * Parses and creates the appropriate command subtype from an input command
      * Acts like a factory method
      *
@@ -39,20 +46,24 @@ public abstract class ChalkCommand {
      */
     public static ChalkCommand parse(String input) {
 
-        if (input.equals(END_CONVERSATION_STRING)) {
+        if (input.equalsIgnoreCase(END_CONVERSATION_STRING)) {
             return new ExitCommand();
-        } else if (input.equals(LIST_TASKS_STRING)) {
+        } else if (input.equalsIgnoreCase(LIST_TASKS_STRING)) {
             return new ListCommand();
-        } else if (input.startsWith(MARK_TASK_AS_DONE_STRING)) {
+        } else if (input.toLowerCase().startsWith(MARK_TASK_AS_DONE_STRING)) {
             return new MarkDoneCommand(input);
-        } else if (input.startsWith(UNMARK_TASK_AS_DONE_STRING)) {
+        } else if (input.toLowerCase().startsWith(UNMARK_TASK_AS_DONE_STRING)) {
             return new UnmarkDoneCommand(input);
-        } else if (input.startsWith(DELETE_TASK_STRING)) {
+        } else if (input.toLowerCase().startsWith(DELETE_TASK_STRING)) {
             return new DeleteCommand(input);
-        } else if (input.startsWith(FIND_TASK_STRING)) {
+        } else if (input.toLowerCase().startsWith(FIND_TASK_STRING)) {
             return new FindCommand(input);
         } else {
             return new AddCommand(input);
         }
+    }
+
+    public boolean shouldExit() {
+        return false;
     }
 }

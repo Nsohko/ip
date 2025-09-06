@@ -1,6 +1,7 @@
 package chalk.commands;
 
 import chalk.Chalk;
+import chalk.ui.GuiUI;
 
 /**
  * The MarkDoneCommand class represents a command to mark a task as done in the Chalk object.
@@ -33,7 +34,26 @@ public class MarkDoneCommand extends ChalkCommand {
             int taskNumber = Integer.parseInt(inputCommand.split(" ")[1]);
             chalk.markTaskAsDone(taskNumber);
         } catch (NumberFormatException e) {
-            chalk.ui.printError("""
+            chalk.textUI.printError("""
+                Invalid task number!
+                Usage: mark [taskNumber]
+                """);
+        }
+    }
+
+    /**
+     * {@inheritDoc} Marks a task in the Chalk object's taskList as done
+     *
+     * @param chalk The Chalk object to mark the task in
+     */
+    @Override
+    public void execute(Chalk chalk, GuiUI guiUI) {
+        try {
+            // taskNumber is 1-indexed
+            int taskNumber = Integer.parseInt(inputCommand.split(" ")[1]);
+            chalk.markTaskAsDone(taskNumber, guiUI);
+        } catch (NumberFormatException e) {
+            guiUI.error("""
                 Invalid task number!
                 Usage: mark [taskNumber]
                 """);
