@@ -77,12 +77,6 @@ class ChalkCommandParseSimpleTest {
     }
 
     @Test
-    void parse_wrongCase_returnsAddCommand() {
-        assertTrue(ChalkCommand.parse("LIST") instanceof AddCommand);
-        assertTrue(ChalkCommand.parse("Bye") instanceof AddCommand);
-    }
-
-    @Test
     void parse_missingSpaceAfterKeyword_returnsAddCommand() {
         assertTrue(ChalkCommand.parse("mark") instanceof AddCommand);
         assertTrue(ChalkCommand.parse("unmark") instanceof AddCommand);

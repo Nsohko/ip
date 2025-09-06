@@ -7,7 +7,8 @@ import chalk.commands.ChalkCommand;
 import chalk.storage.FileStorage;
 import chalk.tasks.Task;
 import chalk.tasks.TaskList;
-import chalk.ui.Ui;
+import chalk.ui.GuiUI;
+import chalk.ui.TextUI;
 
 /**
  * The Chalk class is the main class of the Chalk application.
@@ -25,9 +26,9 @@ public class Chalk {
     private static final String PATH_TO_STORAGE = "./ChalkData/Storage.txt";
 
     /**
-     * Chalk's UI object. Responsible for output onto STDIO
+     * Chalk's textUI object. Responsible for output onto CLI
      */
-    public final Ui ui;
+    public final TextUI textUI;
 
     /**
      * Chalk's FileStorage object. Resposible for managing tasks in file storage
@@ -50,14 +51,15 @@ public class Chalk {
      */
     public Chalk() {
 
-        this.ui = new Ui();
+        this.textUI = new TextUI();
+
         this.storage = new FileStorage(PATH_TO_STORAGE);
 
         try {
             this.taskList = this.storage.load();
-            this.ui.reply("Storage Initialized!");
+            this.textUI.reply("Storage Initialized!");
         } catch (IOException e) {
-            this.ui.printError("Unable to create File Storage. Terminating early.");
+            this.textUI.printError("Unable to create File Storage. Terminating early.");
             return;
         }
 
@@ -66,7 +68,35 @@ public class Chalk {
             What can I do for you?
             """.formatted(Chalk.NAME);
 
-        this.ui.reply(message);
+        this.textUI.reply(message);
+        this.isRunning = true;
+    }
+
+    /**
+     * Initializes the Chalk object, and starts its running If an error occurs
+     * during initializations, terminates Chalk and returns early
+     * Also prints to the JavaFX UI
+     */
+    public Chalk(GuiUI guiUI) {
+
+        this.textUI = new TextUI();
+
+        this.storage = new FileStorage(PATH_TO_STORAGE);
+
+        try {
+            this.taskList = this.storage.load();
+            guiUI.reply("Storage Initialized!");
+        } catch (IOException e) {
+            guiUI.error("Unable to create File Storage. Terminating early.");
+            return;
+        }
+
+        String message = """
+            Hello! I'm %s
+            What can I do for you?
+            """.formatted(Chalk.NAME);
+
+        guiUI.reply(message);
         this.isRunning = true;
     }
 
@@ -75,16 +105,34 @@ public class Chalk {
      */
     public void terminate() {
         String message = "Bye. Hope to see you again soon!";
-        this.ui.reply(message);
+        this.textUI.reply(message);
 
         this.isRunning = false;
     }
 
     /**
-     * Lists all tasks stored inside the
+     * Terminates the chalk object, prints to javaFX
+     */
+    public void terminate(GuiUI guiUI) {
+        String message = "Bye. Hope to see you again soon!";
+        guiUI.reply(message);
+
+        this.isRunning = false;
+    }
+
+    /**
+     * Lists all tasks stored inside the task list
      */
     public void listTasks() {
-        this.ui.reply(this.taskList.toString());
+        this.textUI.reply(this.taskList.toString());
+    }
+
+    /**
+     * Lists all tasks stored inside the task list
+     * Prints to JavaFX
+     */
+    public void listTasks(GuiUI guiUI) {
+        guiUI.reply(this.taskList.toString());
     }
 
     /**
@@ -102,10 +150,33 @@ public class Chalk {
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
-            this.ui.reply(message);
+            this.textUI.reply(message);
 
         } catch (IllegalArgumentException | IOException e) {
-            this.ui.printError(e.getMessage());
+            this.textUI.printError(e.getMessage());
+        }
+    }
+
+    /**
+     * Adds a task to the chalk object
+     * Prints to JavFX
+     *
+     * @param newTask The new task to be added
+     */
+    public void addTask(Task newTask, GuiUI guiUI) {
+        try {
+            this.storage.addTask(newTask);
+            this.taskList.addTask(newTask);
+
+            String message = """
+                Got it. I've added this task:
+                    %s
+                Now you have %d tasks in the list.
+                """.formatted(newTask.toString(), this.taskList.size());
+            guiUI.reply(message);
+
+        } catch (IllegalArgumentException | IOException e) {
+            guiUI.error(e.getMessage());
         }
     }
 
@@ -123,10 +194,32 @@ public class Chalk {
                 Nice! I've marked this task as done:
                     %s
                 """.formatted(task.toString());
-            this.ui.reply(message);
+            this.textUI.reply(message);
 
         } catch (IndexOutOfBoundsException | IOException e) {
-            this.ui.printError(e.getMessage());
+            this.textUI.printError(e.getMessage());
+        }
+    }
+
+    /**
+     * Marks the corresponding task as done
+     * Prints to JavaFx
+     *
+     * @param taskNumber The 1-indexed position of the task to be marked as done
+     *     (i.e. the first task is 1)
+     */
+    public void markTaskAsDone(int taskNumber, GuiUI guiUI) {
+        try {
+            Task task = this.taskList.markAsDone(taskNumber);
+            this.storage.overWriteWithTaskList(taskList);
+            String message = """
+                Nice! I've marked this task as done:
+                    %s
+                """.formatted(task.toString());
+            guiUI.reply(message);
+
+        } catch (IndexOutOfBoundsException | IOException e) {
+            guiUI.error(e.getMessage());
         }
     }
 
@@ -144,9 +237,30 @@ public class Chalk {
                 OK, I've marked this task as not done yet:
                     %s
                 """.formatted(task.toString());
-            this.ui.reply(message);
+            this.textUI.reply(message);
         } catch (IndexOutOfBoundsException | IOException e) {
-            this.ui.printError(e.getMessage());
+            this.textUI.printError(e.getMessage());
+        }
+    }
+
+    /**
+     * Unmarks the corresponding task
+     * Prints to JavaFX
+     *
+     * @param taskNumber The 1-indexed position of the task to be unmarked
+     *     (i.e. the first task is 1)
+     */
+    public void unmarkTaskAsDone(int taskNumber, GuiUI guiUI) {
+        try {
+            Task task = this.taskList.unmarkAsDone(taskNumber);
+            this.storage.overWriteWithTaskList(taskList);
+            String message = """
+                OK, I've marked this task as not done yet:
+                    %s
+                """.formatted(task.toString());
+            guiUI.reply(message);
+        } catch (IndexOutOfBoundsException | IOException e) {
+            guiUI.error(e.getMessage());
         }
     }
 
@@ -165,9 +279,31 @@ public class Chalk {
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(task.toString(), this.taskList.size());
-            this.ui.reply(message);
+            this.textUI.reply(message);
         } catch (IndexOutOfBoundsException | IOException e) {
-            this.ui.printError(e.getMessage());
+            this.textUI.printError(e.getMessage());
+        }
+    }
+
+    /**
+     * Deletes the corresponding task
+     * Prints to JavaFX
+     *
+     * @param taskNumber The 1-indexed position of the task to be deleted
+     *     (i.e. the first task is 1)
+     */
+    public void deleteTask(int taskNumber, GuiUI guiUI) {
+        try {
+            Task task = this.taskList.deleteTask(taskNumber);
+            this.storage.overWriteWithTaskList(taskList);
+            String message = """
+                Noted. I've removed this task:
+                    %s
+                Now you have %d tasks in the list.
+                """.formatted(task.toString(), this.taskList.size());
+            guiUI.reply(message);
+        } catch (IndexOutOfBoundsException | IOException e) {
+            guiUI.error(e.getMessage());
         }
     }
 
@@ -189,7 +325,29 @@ public class Chalk {
                 %s
                 """.formatted(filteredTaskList.toString());
         }
-        this.ui.reply(message);
+        this.textUI.reply(message);
+    }
+
+    /**
+     * Searches for tasks whose name contains searchParam
+     * Prints to JavaFX
+     *
+     * @param searchParam The search parameter to match tasks' names against
+     */
+    public void searchTasks(String searchParam, GuiUI guiUI) {
+
+        TaskList filteredTaskList = this.taskList.searchTasks(searchParam);
+
+        String message;
+        if (filteredTaskList.size() == 0) {
+            message = "No tasks found!";
+        } else {
+            message = """
+                Here are the matching tasks in your list:
+                %s
+                """.formatted(filteredTaskList.toString());
+        }
+        guiUI.reply(message);
     }
 
     public static void main(String[] args) {
