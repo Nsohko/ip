@@ -1,7 +1,6 @@
 package chalk.commands;
 
 import chalk.Chalk;
-import chalk.ui.GuiUI;
 
 /**
  * The ListCommand class represents a command to list all tasks in the Chalk object.
@@ -16,15 +15,5 @@ public class ListCommand extends ChalkCommand {
     @Override
     public void execute(Chalk chalk) {
         chalk.listTasks();
-    }
-
-    /**
-     * {@inheritDoc} Lists all tasks in the Chalk object's taskList
-     *
-     * @param chalk The Chalk object whose tasks to list
-     */
-    @Override
-    public void execute(Chalk chalk, GuiUI guiUI) {
-        chalk.listTasks(guiUI);
     }
 }

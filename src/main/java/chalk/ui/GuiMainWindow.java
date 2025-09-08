@@ -61,7 +61,7 @@ public class GuiMainWindow extends AnchorPane {
         // Parse + execute; the command will push replies via fxUi
         try {
             ChalkCommand command = ChalkCommand.parse(input);
-            command.execute(chalk, guiUI);
+            command.execute(chalk);
 
             if (command.shouldExit()) {
                 // optional UX niceties:
@@ -74,7 +74,7 @@ public class GuiMainWindow extends AnchorPane {
                 pt.play();
             }
         } catch (Exception e) {
-            guiUI.error(e.getMessage());
+            guiUI.printError(e.getMessage());
         }
     }
 }

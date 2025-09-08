@@ -1,7 +1,6 @@
 package chalk.commands;
 
 import chalk.Chalk;
-import chalk.ui.GuiUI;
 
 /**
  * The ChalkCommand class is the base class for all commands in Chalk.
@@ -31,12 +30,6 @@ public abstract class ChalkCommand {
      * that invokes it
      */
     public abstract void execute(Chalk chalk);
-
-    /**
-     * Executes some behaviour of the Chalk object based on the specific command
-     * that invokes it, and prints to javaFX UI
-     */
-    public abstract void execute(Chalk chalk, GuiUI guiUI);
 
     /**
      * Parses and creates the appropriate command subtype from an input command

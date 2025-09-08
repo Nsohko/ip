@@ -1,7 +1,6 @@
 package chalk.commands;
 
 import chalk.Chalk;
-import chalk.ui.GuiUI;
 
 /**
  * The FindCommand class represents a command to find tasks in the Chalk object.
@@ -20,6 +19,8 @@ public class FindCommand extends ChalkCommand {
      */
     public FindCommand(String inputCommand) {
         this.inputCommand = inputCommand;
+
+        assert this.inputCommand != null;
     }
 
     /**
@@ -32,17 +33,5 @@ public class FindCommand extends ChalkCommand {
         // skip 5 chars ("find ")
         String searchParam = this.inputCommand.substring(5);
         chalk.searchTasks(searchParam);
-    }
-
-    /**
-     * {@inheritDoc} Searches for matching tasks in the Chalk object
-     *
-     * @param chalk The Chalk object to search for tasks in
-     */
-    @Override
-    public void execute(Chalk chalk, GuiUI guiUI) {
-        // skip 5 chars ("find ")
-        String[] searchParams = this.inputCommand.substring(5).split(" ");
-        chalk.searchTasks(guiUI, searchParams);
     }
 }

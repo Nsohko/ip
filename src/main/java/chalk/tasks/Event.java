@@ -29,6 +29,9 @@ public class Event extends Task {
         super(taskName);
         this.startTime = startTime;
         this.endTime = endTime;
+
+        assert this.startTime != null;
+        assert this.endTime != null;
     }
 
     /**
