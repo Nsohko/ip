@@ -22,6 +22,8 @@ public class Deadline extends Task {
     public Deadline(String taskName, DateTime deadlineTime) {
         super(taskName);
         this.deadlineTime = deadlineTime;
+
+        assert this.deadlineTime != null;
     }
 
     /**

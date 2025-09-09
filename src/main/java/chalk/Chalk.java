@@ -1,6 +1,7 @@
 package chalk;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Scanner;
 
 import chalk.commands.ChalkCommand;
@@ -28,7 +29,14 @@ public class Chalk {
     /**
      * Chalk's textUI object. Responsible for output onto CLI
      */
-    public final TextUI textUI;
+    private final TextUI textUI;
+
+    /**
+     * Chalk's guiUI object. Responsible for output onto JavaFX
+     * Optional because Chalk can be run in CLI mode only
+     * Initialized to empty optional by default
+     */
+    private Optional<GuiUI> guiUI = Optional.empty();
 
     /**
      * Chalk's FileStorage object. Resposible for managing tasks in file storage
@@ -46,48 +54,24 @@ public class Chalk {
     private boolean isRunning;
 
     /**
-     * Initializes the Chalk object, and starts its running If an error occurs
-     * during initializations, terminates Chalk and returns early
-     */
-    public Chalk() {
-
-        this.textUI = new TextUI();
-
-        this.storage = new FileStorage(PATH_TO_STORAGE);
-
-        try {
-            this.taskList = this.storage.load();
-            this.textUI.reply("Storage Initialized!");
-        } catch (IOException e) {
-            this.textUI.printError("Unable to create File Storage. Terminating early.");
-            return;
-        }
-
-        String message = """
-            Hello! I'm %s
-            What can I do for you?
-            """.formatted(Chalk.NAME);
-
-        this.textUI.reply(message);
-        this.isRunning = true;
-    }
-
-    /**
-     * Initializes the Chalk object, and starts its running If an error occurs
-     * during initializations, terminates Chalk and returns early
-     * Also prints to the JavaFX UI
+     * Initializes the Chalk object, and starts its running
+     * If an error occurs during initializations, terminates Chalk and returns early
+     * If an explicit non-null GuiUI object is passed in, Chalk will also use it for JavaFX output
      */
     public Chalk(GuiUI guiUI) {
 
+        this.guiUI = Optional.ofNullable(guiUI);
+
         this.textUI = new TextUI();
+        
 
         this.storage = new FileStorage(PATH_TO_STORAGE);
 
         try {
             this.taskList = this.storage.load();
-            guiUI.reply("Storage Initialized!");
+            this.printReply("Storage Initialized!");
         } catch (IOException e) {
-            guiUI.error("Unable to create File Storage. Terminating early.");
+            this.printError("Unable to create File Storage. Terminating early.");
             return;
         }
 
@@ -96,8 +80,44 @@ public class Chalk {
             What can I do for you?
             """.formatted(Chalk.NAME);
 
-        guiUI.reply(message);
+        this.printReply(message);
         this.isRunning = true;
+
+        assert this.textUI != null;
+        assert this.storage != null;
+        assert (!this.isRunning) || (this.taskList != null);
+    }
+
+    /**
+     * Initializes the Chalk object, and starts its running
+     * If no guiUI is passed, Chalk will run in CLI mode only
+     */
+    public Chalk() {
+        this(null);
+    }
+
+    /**
+     * Prints out a message with appropriate formatting
+     * Prints to both CLI and JavaFX, if guiUI is present
+     * Else just prints to CLI
+     *
+     * @param message The message to be printed out
+     */
+    public final void printReply(String message) {
+        this.textUI.printReply(message);
+        this.guiUI.ifPresent(gui -> gui.printReply(message));
+    }
+
+    /**
+     * Prints out an error message with appropriate formatting
+     * Prints to both CLI and JavaFX, if guiUI is present
+     * Else just prints to CLI
+     *
+     * @param message The error to be printed out
+     */
+    public final void printError(String message) {
+        this.textUI.printError(message);
+        this.guiUI.ifPresent(gui -> gui.printError(message));
     }
 
     /**
@@ -105,34 +125,18 @@ public class Chalk {
      */
     public void terminate() {
         String message = "Bye. Hope to see you again soon!";
-        this.textUI.reply(message);
+        this.printReply(message);
 
         this.isRunning = false;
-    }
 
-    /**
-     * Terminates the chalk object, prints to javaFX
-     */
-    public void terminate(GuiUI guiUI) {
-        String message = "Bye. Hope to see you again soon!";
-        guiUI.reply(message);
-
-        this.isRunning = false;
+        assert this.isRunning == false;
     }
 
     /**
      * Lists all tasks stored inside the task list
      */
     public void listTasks() {
-        this.textUI.reply(this.taskList.toString());
-    }
-
-    /**
-     * Lists all tasks stored inside the task list
-     * Prints to JavaFX
-     */
-    public void listTasks(GuiUI guiUI) {
-        guiUI.reply(this.taskList.toString());
+        this.printReply(this.taskList.toString());
     }
 
     /**
@@ -150,33 +154,10 @@ public class Chalk {
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
-            this.textUI.reply(message);
+            this.printReply(message);
 
         } catch (IllegalArgumentException | IOException e) {
-            this.textUI.printError(e.getMessage());
-        }
-    }
-
-    /**
-     * Adds a task to the chalk object
-     * Prints to JavFX
-     *
-     * @param newTask The new task to be added
-     */
-    public void addTask(Task newTask, GuiUI guiUI) {
-        try {
-            this.storage.addTask(newTask);
-            this.taskList.addTask(newTask);
-
-            String message = """
-                Got it. I've added this task:
-                    %s
-                Now you have %d tasks in the list.
-                """.formatted(newTask.toString(), this.taskList.size());
-            guiUI.reply(message);
-
-        } catch (IllegalArgumentException | IOException e) {
-            guiUI.error(e.getMessage());
+            this.printError(e.getMessage());
         }
     }
 
@@ -194,32 +175,10 @@ public class Chalk {
                 Nice! I've marked this task as done:
                     %s
                 """.formatted(task.toString());
-            this.textUI.reply(message);
+            this.printReply(message);
 
         } catch (IndexOutOfBoundsException | IOException e) {
-            this.textUI.printError(e.getMessage());
-        }
-    }
-
-    /**
-     * Marks the corresponding task as done
-     * Prints to JavaFx
-     *
-     * @param taskNumber The 1-indexed position of the task to be marked as done
-     *     (i.e. the first task is 1)
-     */
-    public void markTaskAsDone(int taskNumber, GuiUI guiUI) {
-        try {
-            Task task = this.taskList.markAsDone(taskNumber);
-            this.storage.overWriteWithTaskList(taskList);
-            String message = """
-                Nice! I've marked this task as done:
-                    %s
-                """.formatted(task.toString());
-            guiUI.reply(message);
-
-        } catch (IndexOutOfBoundsException | IOException e) {
-            guiUI.error(e.getMessage());
+            this.printError(e.getMessage());
         }
     }
 
@@ -237,30 +196,9 @@ public class Chalk {
                 OK, I've marked this task as not done yet:
                     %s
                 """.formatted(task.toString());
-            this.textUI.reply(message);
+            this.printReply(message);
         } catch (IndexOutOfBoundsException | IOException e) {
-            this.textUI.printError(e.getMessage());
-        }
-    }
-
-    /**
-     * Unmarks the corresponding task
-     * Prints to JavaFX
-     *
-     * @param taskNumber The 1-indexed position of the task to be unmarked
-     *     (i.e. the first task is 1)
-     */
-    public void unmarkTaskAsDone(int taskNumber, GuiUI guiUI) {
-        try {
-            Task task = this.taskList.unmarkAsDone(taskNumber);
-            this.storage.overWriteWithTaskList(taskList);
-            String message = """
-                OK, I've marked this task as not done yet:
-                    %s
-                """.formatted(task.toString());
-            guiUI.reply(message);
-        } catch (IndexOutOfBoundsException | IOException e) {
-            guiUI.error(e.getMessage());
+            this.printError(e.getMessage());
         }
     }
 
@@ -279,31 +217,9 @@ public class Chalk {
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(task.toString(), this.taskList.size());
-            this.textUI.reply(message);
+            this.printReply(message);
         } catch (IndexOutOfBoundsException | IOException e) {
-            this.textUI.printError(e.getMessage());
-        }
-    }
-
-    /**
-     * Deletes the corresponding task
-     * Prints to JavaFX
-     *
-     * @param taskNumber The 1-indexed position of the task to be deleted
-     *     (i.e. the first task is 1)
-     */
-    public void deleteTask(int taskNumber, GuiUI guiUI) {
-        try {
-            Task task = this.taskList.deleteTask(taskNumber);
-            this.storage.overWriteWithTaskList(taskList);
-            String message = """
-                Noted. I've removed this task:
-                    %s
-                Now you have %d tasks in the list.
-                """.formatted(task.toString(), this.taskList.size());
-            guiUI.reply(message);
-        } catch (IndexOutOfBoundsException | IOException e) {
-            guiUI.error(e.getMessage());
+            this.printError(e.getMessage());
         }
     }
 
@@ -325,30 +241,7 @@ public class Chalk {
                 %s
                 """.formatted(filteredTaskList.toString());
         }
-        this.textUI.reply(message);
-    }
-
-    /**
-     * Searches for tasks whose name contains searchParam
-     * Prints to JavaFX
-     * Note that the order of params is swapped (guiUI first to allow for varargs)
-     *
-     * @param searchParam The search parameter to match tasks' names against
-     */
-    public void searchTasks(GuiUI guiUI, String... searchParams) {
-
-        TaskList filteredTaskList = this.taskList.searchTasks(searchParams);
-
-        String message;
-        if (filteredTaskList.size() == 0) {
-            message = "No tasks found!";
-        } else {
-            message = """
-                Here are the matching tasks in your list:
-                %s
-                """.formatted(filteredTaskList.toString());
-        }
-        guiUI.reply(message);
+        this.printReply(message);
     }
 
     public static void main(String[] args) {

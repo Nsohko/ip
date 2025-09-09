@@ -15,7 +15,7 @@ public class TextUI {
      *
      * @param sentenceString The message to be printed out
      */
-    public void reply(String sentenceString) {
+    public void printReply(String sentenceString) {
 
         System.out.println(TextUI.LINE_BREAK);
 

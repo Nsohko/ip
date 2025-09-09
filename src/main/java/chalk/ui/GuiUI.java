@@ -34,7 +34,7 @@ public final class GuiUI {
      *
      * @param message The message to be displayed
      */
-    public void reply(String message) {
+    public void printReply(String message) {
         Platform.runLater(() ->
                 dialogContainer.getChildren()
                         .add(DialogBox.getChalkDialog(message, chalkImage))
@@ -46,7 +46,7 @@ public final class GuiUI {
      *
      * @param message The erorr message to be displayed
      */
-    public void error(String message) {
+    public void printError(String message) {
         Platform.runLater(() -> {
             var errorDialog = DialogBox.getChalkDialog("ERROR!\n" + message, chalkImage);
             errorDialog.getStyleClass().add("error-dialog");

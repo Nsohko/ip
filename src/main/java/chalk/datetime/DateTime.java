@@ -30,6 +30,8 @@ public class DateTime implements Storable {
         LocalDateTime parsedDateTime = LocalDateTime.parse(input, formatter);
 
         this.dateTime = parsedDateTime;
+
+        assert this.dateTime != null;
     }
 
     /**

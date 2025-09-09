@@ -1,11 +1,10 @@
 package chalk.ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +41,7 @@ class TextUiTest {
     @Test
     void reply_printsBoundedBlock_withEachLineIndented() {
         TextUI ui = new TextUI();
-        ui.reply("Hello\nWorld");
+        ui.printReply("Hello\nWorld");
 
         String expected = LINE + NL
                 + "    Hello" + NL
@@ -81,7 +80,7 @@ class TextUiTest {
     @Test
     void reply_handlesSingleLine_correctFormat() {
         TextUI ui = new TextUI();
-        ui.reply("Hello");
+        ui.printReply("Hello");
 
         String expected = LINE + NL
                 + "    Hello" + NL
