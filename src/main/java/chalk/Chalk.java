@@ -85,6 +85,7 @@ public class Chalk {
 
         assert this.textUI != null;
         assert this.storage != null;
+        assert this.guiUI != null;
         assert (!this.isRunning) || (this.taskList != null);
     }
 
