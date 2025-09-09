@@ -1,6 +1,8 @@
 package chalk.tasks;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import chalk.storage.Storable;
 
@@ -88,14 +90,10 @@ public class TaskList implements Storable {
     public TaskList searchTasks(String... searchParams) {
         TaskList filteredList = new TaskList();
 
-        for (Task t : this.taskList) {
-            for (String searchTerm: searchParams) {
-                if (t.getName().contains(searchTerm)) {
-                    filteredList.addTask(t);
-                    break;
-                }
-            }
-        }
+        this.taskList.stream()
+            .filter(t -> Arrays.stream(searchParams)
+                    .anyMatch(s -> t.getName().contains(s)))
+            .forEach(filteredList::addTask);
 
         return filteredList;
     }
@@ -105,15 +103,10 @@ public class TaskList implements Storable {
      */
     @Override
     public String toString() {
-        String res = "";
 
-        Task task;
-        for (int i = 0; i < this.taskList.size(); i++) {
-            task = this.taskList.get(i);
-            res += ((i + 1) + ". " + task.toString() + "\n");
-        }
-
-        return res;
+        return IntStream.range(0, this.taskList.size())
+            .mapToObj(i -> (i + 1) + ". " + this.taskList.get(i).toString() + "\n")
+            .reduce("", (a, b) -> a + b);
     }
 
     /**
@@ -121,14 +114,8 @@ public class TaskList implements Storable {
      */
     @Override
     public String toFileStorage() {
-        String res = "";
-
-        Task task;
-        for (int i = 0; i < this.taskList.size(); i++) {
-            task = this.taskList.get(i);
-            res += (task.toFileStorage() + "\n");
-        }
-
-        return res;
+        return this.taskList.stream()
+                .map(t -> t.toFileStorage() + "\n")
+                .reduce("", (a, b) -> a + b);
     }
 }
