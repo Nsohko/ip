@@ -63,7 +63,6 @@ public class Chalk {
         this.guiUI = Optional.ofNullable(guiUI);
 
         this.textUI = new TextUI();
-        
 
         this.storage = new FileStorage(PATH_TO_STORAGE);
 
