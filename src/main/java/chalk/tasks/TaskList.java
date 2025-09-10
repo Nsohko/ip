@@ -2,6 +2,7 @@ package chalk.tasks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import chalk.storage.Storable;
@@ -117,5 +118,18 @@ public class TaskList implements Storable {
         return this.taskList.stream()
                 .map(t -> t.toFileStorage() + "\n")
                 .reduce("", (a, b) -> a + b);
+    }
+
+    /**
+     * Checks through taskList to find if any event that conflicts with newTask (or vice versa)
+     * using their own checkConflict methods
+     *
+     * @return An optional containing the first conflicting task (if it exists)
+     * If there is no conflicting task, an empty optional is returned
+     */
+    public Optional<Task> checkConflict(Task newTask) {
+        return this.taskList.stream()
+                .filter(t -> t.checkConflict(newTask) || newTask.checkConflict(t))
+                .findFirst();
     }
 }

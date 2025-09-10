@@ -3,6 +3,7 @@ package chalk.datetime;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 import chalk.storage.Storable;
 
@@ -50,5 +51,12 @@ public class DateTime implements Storable {
     public String toFileStorage() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         return this.dateTime.format(formatter);
+    }
+
+    /**
+     * Returns True if the current DateTime is before the other one
+     */
+    public Boolean isBefore(DateTime otherDateTime) {
+        return this.dateTime.isBefore(otherDateTime.dateTime);
     }
 }
