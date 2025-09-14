@@ -30,4 +30,26 @@ public class Todo extends Task {
         return "todo " + this.getName()
                 + super.toFileStorage();
     }
+
+    /**
+     * Creates a Todo task from an input command string
+     *
+     * @param inputCommand The input command string
+     * @return A Todo task created from the input command string
+     * @throws IllegalArgumentException If the input command string is invalid
+     */
+    public static Todo fromInputCommand(String inputCommand) throws IllegalArgumentException {
+        // skip the beginning 5 chars ("todo ")
+        String taskName = inputCommand.substring(5).trim();
+
+        // trim to ensure it isnt just whitespace
+        if (taskName.trim().isEmpty()) {
+            throw new IllegalArgumentException("""
+                    Todo task name cannot be empty.
+                    Usage: todo [taskName]
+                    """);
+        }
+
+        return new Todo(taskName);
+    }
 }

@@ -28,7 +28,7 @@ public class FileStorage {
     }
 
     /**
-     * Load the TaskList based on the information currently stored in the
+     * Loads the TaskList based on the information currently stored in the
      * storage file If the storage file does not exist yet, it will create it
      *
      * @throws IOException If unable to parse the file as Task data
