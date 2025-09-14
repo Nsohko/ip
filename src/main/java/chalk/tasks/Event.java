@@ -64,7 +64,7 @@ public class Event extends Task {
             return false;
         }
 
-        return this.startTime.isBefore(castedOtherTask.endTime) &&
-                castedOtherTask.startTime.isBefore(this.endTime);
+        return this.startTime.isBefore(castedOtherTask.endTime)
+            && castedOtherTask.startTime.isBefore(this.endTime);
     }
 }

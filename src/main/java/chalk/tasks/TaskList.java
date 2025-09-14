@@ -125,7 +125,7 @@ public class TaskList implements Storable {
      * using their own checkConflict methods
      *
      * @return An optional containing the first conflicting task (if it exists)
-     * If there is no conflicting task, an empty optional is returned
+     *     If there is no conflicting task, an empty optional is returned
      */
     public Optional<Task> checkConflict(Task newTask) {
         return this.taskList.stream()
