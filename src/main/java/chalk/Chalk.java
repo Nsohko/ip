@@ -145,6 +145,18 @@ public class Chalk {
      * @param newTask The new task to be added
      */
     public void addTask(Task newTask) {
+
+        Optional<Task> conflictTask = this.taskList.checkConflict(newTask);
+
+        if (conflictTask.isPresent()) {
+            String message = """
+                    I cannot add this task! It conflicts with the following:
+                    %s
+                    """.formatted(conflictTask.get());
+            this.printError(message);
+            return;
+        }
+
         try {
             this.storage.addTask(newTask);
             this.taskList.addTask(newTask);

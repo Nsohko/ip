@@ -53,4 +53,18 @@ public class Event extends Task {
                 + " /from " + this.startTime.toFileStorage() + " /to " + this.endTime.toFileStorage()
                 + super.toFileStorage();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkConflict(Task otherTask) {
+        if (!(otherTask instanceof Event castedOtherTask)) {
+            // Currently, events can only conflict with other events
+            return false;
+        }
+
+        return this.startTime.isBefore(castedOtherTask.endTime) &&
+                castedOtherTask.startTime.isBefore(this.endTime);
+    }
 }

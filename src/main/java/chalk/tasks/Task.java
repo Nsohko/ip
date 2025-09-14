@@ -52,6 +52,15 @@ public abstract class Task implements Storable {
     }
 
     /**
+     * Check if the current task conflicts with the other
+     * Currently, only relevant for events,
+     * so default implementation for other subclasses is to just return false
+     */
+    public boolean checkConflict(Task otherTask) {
+        return false;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
