@@ -95,6 +95,16 @@ public class Chalk {
     public Chalk() {
         this(null);
     }
+    /**
+     * Alternate constructor for Chalk, used ONLY for testing
+     * Allows passing in of stubs/mocks for Chalk's internals
+     */
+    public Chalk(TextUI textUI, FileStorage storage, TaskList taskList) {
+        this.textUI = textUI;
+        this.storage = storage;
+        this.taskList = taskList;
+        this.isRunning = true;
+    }
 
     /**
      * Prints out a message with appropriate formatting

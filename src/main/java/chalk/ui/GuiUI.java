@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 /**
  * The GUIUI class is reponsible for managing Chalk's interactions with the user via JavaFX.
  */
-public final class GuiUI {
+public class GuiUI {
     /**
      * The dialogue box container to display messages
      */
