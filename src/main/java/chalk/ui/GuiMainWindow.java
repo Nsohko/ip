@@ -25,8 +25,8 @@ public class GuiMainWindow extends AnchorPane {
     private Chalk chalk;
     private GuiUI guiUI;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image chalkImage = new Image(this.getClass().getResourceAsStream("/images/Chalk.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
+    private final Image chalkImage = new Image(this.getClass().getResourceAsStream("/images/Chalk.png"));
 
     /**
      * Intialize the GuiMainWindow
