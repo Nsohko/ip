@@ -68,15 +68,15 @@ public class Chalk {
 
         try {
             this.taskList = this.storage.load();
-            this.printReply("Storage Initialized!");
+            this.printReply("Storage Initialized! YAY!");
         } catch (IOException e) {
-            this.printError("Unable to create File Storage. Terminating early.");
+            this.printError("Unable to create File Storage. Terminating early :(");
             return;
         }
 
         String message = """
-            Hello! I'm %s
-            What can I do for you?
+            Hello! I'm %s!
+            How can I help you today?
             """.formatted(Chalk.NAME);
 
         this.printReply(message);
@@ -134,7 +134,7 @@ public class Chalk {
      * Terminates the chalk object
      */
     public void terminate() {
-        String message = "Bye. Hope to see you again soon!";
+        String message = "Bye. Hope to see you again soon! :)";
         this.printReply(message);
 
         this.isRunning = false;
@@ -160,7 +160,7 @@ public class Chalk {
 
         if (conflictTask.isPresent()) {
             String message = """
-                    I cannot add this task! It conflicts with the following:
+                    Sorry, I cannot add this task! It conflicts with the following:
                     %s
                     """.formatted(conflictTask.get());
             this.printError(message);
@@ -172,7 +172,7 @@ public class Chalk {
             this.taskList.addTask(newTask);
 
             String message = """
-                Got it. I've added this task:
+                Epic!. I've added this task:
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
@@ -194,7 +194,7 @@ public class Chalk {
             Task task = this.taskList.markAsDone(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
             String message = """
-                Nice! I've marked this task as done:
+                AWESOME! I've marked this task as done:
                     %s
                 """.formatted(task.toString());
             this.printReply(message);
@@ -215,7 +215,7 @@ public class Chalk {
             Task task = this.taskList.unmarkAsDone(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
             String message = """
-                OK, I've marked this task as not done yet:
+                Aw man, I've marked this task as not done yet:
                     %s
                 """.formatted(task.toString());
             this.printReply(message);
@@ -235,7 +235,7 @@ public class Chalk {
             Task task = this.taskList.deleteTask(taskNumber);
             this.storage.overWriteWithTaskList(taskList);
             String message = """
-                Noted. I've removed this task:
+                Roger that! I've removed this task:
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(task.toString(), this.taskList.size());

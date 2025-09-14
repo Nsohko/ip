@@ -25,7 +25,10 @@
     -fx-font-size: 20px;
 }
 
-.scroll-pane,
+.scroll-pane {
+    -fx-background-color: rgba(0,0,0,.75);
+}
+
 .scroll-pane .viewport {
     -fx-background-color: transparent;
 }

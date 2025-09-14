@@ -51,14 +51,14 @@ public class DialogBox extends HBox {
 
     public static DialogBox getUserDialog(String text, Image img) {
         var db = new DialogBox(text, img);
-        db.dialog.getStyleClass().addAll("user-label","dialog-label", "bubble-right");
+        db.dialog.getStyleClass().addAll("user-label", "dialog-label", "bubble-right");
         return db;
     }
 
     public static DialogBox getChalkDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
-        db.dialog.getStyleClass().addAll("chalk-label","dialog-label", "bubble-left");
+        db.dialog.getStyleClass().addAll("chalk-label", "dialog-label", "bubble-left");
         return db;
     }
 }
