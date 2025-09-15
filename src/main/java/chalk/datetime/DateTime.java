@@ -3,6 +3,7 @@ package chalk.datetime;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import chalk.storage.Storable;
 
@@ -26,7 +27,7 @@ public class DateTime implements Storable {
      *     LocalDateTime object
      */
     public DateTime(String input) throws DateTimeParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/uuuu HHmm").withResolverStyle(ResolverStyle.STRICT);;
         LocalDateTime parsedDateTime = LocalDateTime.parse(input, formatter);
 
         this.dateTime = parsedDateTime;
@@ -55,14 +56,26 @@ public class DateTime implements Storable {
     /**
      * Returns True if the current DateTime is before the other one
      */
-    public Boolean isBefore(DateTime otherDateTime) {
+    public boolean isBefore(DateTime otherDateTime) {
         return this.dateTime.isBefore(otherDateTime.dateTime);
     }
 
     /**
      * Returns True if the current DateTime is after the other one
      */
-    public Boolean isAfter(DateTime otherDateTime) {
+    public boolean isAfter(DateTime otherDateTime) {
         return this.dateTime.isAfter(otherDateTime.dateTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof DateTime)) {
+            return false;
+        }
+        DateTime otherDateTime = (DateTime) other;
+        return this.dateTime.equals(otherDateTime.dateTime);
     }
 }

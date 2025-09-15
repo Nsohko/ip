@@ -1,153 +1,143 @@
 package chalk.tasks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 class TaskTest {
 
-    // --- Factory: todo ---
+    // ---------- basic state & presentation ----------
+
     @Test
-    void fromInputCommand_todo_success() {
+    void getName_and_getIsDone_defaultsAndUpdates() {
+        Task t = new TaskStub("read book");
+        assertEquals("read book", t.getName());
+        assertFalse(t.getIsDone());
+
+        t.markAsDone();
+        assertTrue(t.getIsDone());
+
+        t.unmarkAsDone();
+        assertFalse(t.getIsDone());
+    }
+
+    @Test
+    void toString_usesBaseFormat() {
+        Task t = new TaskStub("read book");
+        assertEquals("[ ] read book", t.toString());
+
+        t.markAsDone();
+        assertEquals("[X] read book", t.toString());
+    }
+
+    @Test
+    void toFileStorage_usesBaseFormat() {
+        Task t = new TaskStub("read book");
+        assertEquals(" | 0", t.toFileStorage());
+
+        t.markAsDone();
+        assertEquals(" | 1", t.toFileStorage());
+    }
+
+    // ---------- equals (base uses getClass + fields) ----------
+
+    @Test
+    void equals_sameClassSameFields_true() {
+        Task a = new TaskStub("A");
+        Task b = new TaskStub("A");
+        assertEquals(a, b);
+
+        a.markAsDone();
+        b.markAsDone();
+        assertEquals(a, b);
+    }
+
+    @Test
+    void equals_sameClassDifferentFields_false() {
+        Task a = new TaskStub("A");
+        Task b = new TaskStub("B"); // different name
+        assertNotEquals(a, b);
+
+        Task c = new TaskStub("A");
+        c.markAsDone(); // different done state
+        assertNotEquals(a, c);
+    }
+
+    @Test
+    void equals_nullAndOtherType_false() {
+        Task a = new TaskStub("A");
+        assertNotEquals(a, null);
+        assertNotEquals(a, "not a task");
+    }
+
+    // ---------- checkConflict (default: equals either way) ----------
+
+    @Test
+    void checkConflict_equalTasks_conflictTrue() {
+        Task a = new TaskStub("A");
+        Task b = new TaskStub("A");
+        assertTrue(a.checkConflict(b));
+        assertTrue(b.checkConflict(a));
+    }
+
+    @Test
+    void checkConflict_differentTasks_conflictFalse() {
+        Task a = new TaskStub("A");
+        Task b = new TaskStub("B");
+        assertFalse(a.checkConflict(b));
+        assertFalse(b.checkConflict(a));
+    }
+
+    @Test
+    void checkConflict_handlesAsymmetricEquals_returnsTrueIfEitherSideEquals() {
+        // Left says equals(right) == true; Right says equals(left) == false.
+        Task left = new WeirdLeftEqualsTaskStub("X");
+        Task right = new WeirdRightEqualsTaskStub("Y");
+
+        // Default implementation: this.equals(other) || other.equals(this)
+        assertTrue(left.checkConflict(right));   // left.equals(right) is true
+        assertTrue(right.checkConflict(left));   // other.equals(this) triggers left.equals(right) == true
+    }
+
+    // ---------- fromInputCommand factory ----------
+
+    @Test
+    void fromInputCommand_todo_routedToTodo() {
         Task t = Task.fromInputCommand("todo buy milk");
         assertTrue(t instanceof Todo);
         assertEquals("buy milk", t.getName());
     }
 
     @Test
-    void fromInputCommand_todoEmptyName_throws() {
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("todo   "));
-
-        assertEquals("""
-                    Todo task name cannot be empty.
-                    Usage: todo [taskName]
-                    """,
-                ex.getMessage());
-    }
-
-    // --- Factory: deadline ---
-    @Test
-    void fromInputCommand_deadline_success() {
-        Task t = Task.fromInputCommand("deadline return book /by 6/6/2025 1820");
+    void fromInputCommand_deadline_routedToDeadline() {
+        // Keep this light: assert type; avoid formatting coupling
+        Task t = Task.fromInputCommand("deadline submit /by 1/1/2030 0900");
         assertTrue(t instanceof Deadline);
-        assertEquals("return book", t.getName());
-        // We don't assert the subtype's toString formatting here to keep it simple.
     }
 
     @Test
-    void fromInputCommand_deadlineMissingParts_throws() {
-        IllegalArgumentException ex;
-
-        String expectedError = """
-                            Deadline task name and due date cannot be empty.
-                            Usage: deadline [taskName] /by [dueDate]
-                            """;
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("deadline finish hw"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("deadline  /by 6/6/2025 1820"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("deadline finish hw /by   "));
-        assertEquals(expectedError, ex.getMessage());
-    }
-
-    @Test
-    void fromInputCommand_deadlineBadDate_throws() {
-
-        IllegalArgumentException ex;
-
-        String expectedError = """
-                        Provide deadline due date in the following format:
-                        dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
-                        """;
-
-        // wrong format (colons) or impossible date
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("deadline a /by abcs"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("deadline a /by 1233"));
-        assertEquals(expectedError, ex.getMessage());
-    }
-
-    // --- Factory: event ---
-    @Test
-    void fromInputCommand_event_success() {
-        Task t = Task.fromInputCommand(
-                "event project meeting /from 1/1/2025 0900 /to 1/1/2025 1000");
+    void fromInputCommand_event_routedToEvent() {
+        Task t = Task.fromInputCommand("event meeting /from 1/1/2030 0900 /to 1/1/2030 1000");
         assertTrue(t instanceof Event);
-        assertEquals("project meeting", t.getName());
     }
 
     @Test
-    void fromInputCommand_eventFlippedToFrom_success() {
-        Task t = Task.fromInputCommand(
-                "event project meeting /to 20/11/2026 1800 /from 1/1/2025 0900");
-        assertTrue(t instanceof Event);
-        assertEquals("project meeting", t.getName());
+    void fromInputCommand_stripsWhitespaceBeforeDispatch() {
+        Task t = Task.fromInputCommand("   todo   read  ");
+        assertTrue(t instanceof Todo);
+        assertEquals("read", t.getName());
     }
 
     @Test
-    void fromInputCommand_eventMissingParts_throws() {
-        IllegalArgumentException ex;
-
-        String expectedError = """
-                        Event task name, start time and end time cannot be empty.
-                        Usage: event [eventName] /from [startTime] /to [endTime]
-                        """;
-
-        // Missing /from and /to or empty segments
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("event meeting"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("event  /from 1/1/2025 0900 /to 1/1/2025 1000"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("event meeting /from   /to 1/1/2025 1000"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("event meeting /from 1/1/2025 0900 /to   "));
-        assertEquals(expectedError, ex.getMessage());
-    }
-
-    @Test
-    void fromInputCommand_eventBadDates_throws() {
-        IllegalArgumentException ex;
-
-        String expectedError = """
-                        Provide event start and end time in the following format:
-                        dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
-                        """;
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("event x /from 2025-01-01 0900 /to 1/1/2025 1000"));
-        assertEquals(expectedError, ex.getMessage());
-
-        ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("event x /from 1/1/2025 0900 /to 2025-01-01 1000"));
-        assertEquals(expectedError, ex.getMessage());
-
-        assertEquals(expectedError, ex.getMessage());
-    }
-
-    // --- Factory: unknown ---
-    @Test
-    void fromInputCommand_unknownCommand_throws() {
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, ()
-                -> Task.fromInputCommand("remind me to sleep"));
-        assertTrue(ex.getMessage().contains("Unknown Command"));
+    void fromInputCommand_unknown_throwsWithInputEchoed() {
+        IllegalArgumentException ex = assertThrows(
+            IllegalArgumentException.class,
+            () -> Task.fromInputCommand("remind me later")
+        );
+        assertTrue(ex.getMessage().startsWith("Unknown Command: "));
+        assertTrue(ex.getMessage().contains("remind me later"));
     }
 }

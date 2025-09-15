@@ -3,7 +3,6 @@ package chalk;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +48,7 @@ public class ChalkTest {
 
         chalk.markTaskAsDone(1);
 
-        assertTrue(t.isDone());
+        assertTrue(t.getIsDone());
         assertTrue(textUI.replies.stream().anyMatch(s -> s.contains("marked this task as done")));
     }
 
@@ -61,7 +60,7 @@ public class ChalkTest {
 
         chalk.unmarkTaskAsDone(1);
 
-        assertFalse(t.isDone());
+        assertFalse(t.getIsDone());
         assertTrue(textUI.replies.stream().anyMatch(s -> s.contains("not done yet")));
     }
 
