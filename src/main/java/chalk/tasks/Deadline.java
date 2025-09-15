@@ -56,9 +56,9 @@ public class Deadline extends Task {
      */
     public static Deadline fromInputCommand(String inputCommand) throws IllegalArgumentException {
         // split into an array containing [taskName, deadlineTime]
-        String[] parts = inputCommand.substring(9).split(" /by ", 2);
+        String[] parts = inputCommand.substring(8).stripLeading().split("\\s+/by\\s+", 2);
 
-        if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+        if (parts.length < 2 || parts[0].strip().isEmpty() || parts[1].strip().isEmpty()) {
             throw new IllegalArgumentException("""
                     Deadline task name and due date cannot be empty.
                     Usage: deadline [taskName] /by [dueDate]
@@ -77,5 +77,18 @@ public class Deadline extends Task {
                     """);
         }
         return new Deadline(taskName, deadlineTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Deadline otherDeadline = (Deadline) other;
+        return super.equals(other)
+                && this.deadlineTime.equals(otherDeadline.deadlineTime);
     }
 }

@@ -39,11 +39,11 @@ public class Todo extends Task {
      * @throws IllegalArgumentException If the input command string is invalid
      */
     public static Todo fromInputCommand(String inputCommand) throws IllegalArgumentException {
-        // skip the beginning 5 chars ("todo ")
-        String taskName = inputCommand.substring(5).trim();
+        // skip the beginning 5 chars ("todo")
+        String taskName = inputCommand.substring(4).stripLeading();
 
-        // trim to ensure it isnt just whitespace
-        if (taskName.trim().isEmpty()) {
+        // strip to ensure it isnt just whitespace
+        if (taskName.strip().isEmpty()) {
             throw new IllegalArgumentException("""
                     Todo task name cannot be empty.
                     Usage: todo [taskName]
@@ -51,5 +51,18 @@ public class Todo extends Task {
         }
 
         return new Todo(taskName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+
+        Todo otherTodo = (Todo) other;
+        return super.equals(otherTodo);
     }
 }

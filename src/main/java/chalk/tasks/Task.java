@@ -49,12 +49,18 @@ public abstract class Task implements Storable {
     }
 
     /**
+     * Returns whether current task is done
+     */
+    public boolean getIsDone() {
+        return this.isDone;
+    }
+
+    /**
      * Check if the current task conflicts with the other
-     * Currently, only relevant for events,
-     * so default implementation for other subclasses is to just return false
+     * Base implementation is to check for equality
      */
     public boolean checkConflict(Task otherTask) {
-        return false;
+        return this.equals(otherTask) || otherTask.equals(this);
     }
 
     /**
@@ -66,6 +72,19 @@ public abstract class Task implements Storable {
                 + (this.isDone ? "X" : " ")
                 + "] "
                 + this.taskName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Task otherTask = (Task) other;
+        return this.getName().equals(otherTask.getName())
+                && this.getIsDone() == otherTask.getIsDone();
     }
 
     /**
@@ -85,12 +104,13 @@ public abstract class Task implements Storable {
      */
     public static Task fromInputCommand(String inputCommand) throws IllegalArgumentException {
 
-        if (inputCommand.startsWith("todo ")) {
+        inputCommand = inputCommand.strip();
+        if (inputCommand.startsWith("todo")) {
             return Todo.fromInputCommand(inputCommand);
-        } else if (inputCommand.startsWith("deadline ")) {
+        } else if (inputCommand.startsWith("deadline")) {
             return Deadline.fromInputCommand(inputCommand);
 
-        } else if (inputCommand.startsWith("event ")) {
+        } else if (inputCommand.startsWith("event")) {
             return Event.fromInputCommand(inputCommand);
         }
         throw new IllegalArgumentException("Unknown Command: " + inputCommand);

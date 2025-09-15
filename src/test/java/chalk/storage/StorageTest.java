@@ -57,17 +57,6 @@ class FileStorageTest {
     }
 
     @Test
-    void load_missingSeparator_throwsOnMalformedLine(@TempDir Path tempDir) throws IOException {
-        Path file = tempDir.resolve("Storage.txt");
-        // No " | " separator → should trigger IOException in load()
-        Files.writeString(file, "todo buy milk\n");
-
-        FileStorage storage = new FileStorage(file.toString());
-        IOException ex = assertThrows(IOException.class, storage::load);
-        assertTrue(ex.getMessage().contains("Error parsing task data"));
-    }
-
-    @Test
     void load_skipsUnknownOrBadCommandbutKeepsOthers(@TempDir Path tempDir) throws IOException {
         Path file = tempDir.resolve("Storage.txt");
         // Second line has an unknown command; load() should skip it and keep the valid ones

@@ -32,9 +32,9 @@ public class MarkDoneCommand extends ChalkCommand {
     public void execute(Chalk chalk) {
         try {
             // taskNumber is 1-indexed
-            int taskNumber = Integer.parseInt(inputCommand.split(" ")[1]);
+            int taskNumber = Integer.parseInt(inputCommand.split("\\s+")[1]);
             chalk.markTaskAsDone(taskNumber);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
             chalk.printError("""
                 Invalid task number!
                 Usage: mark [taskNumber]

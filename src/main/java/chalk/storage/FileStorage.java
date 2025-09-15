@@ -48,7 +48,8 @@ public class FileStorage {
                 String[] taskInfo = s.nextLine().split(" \\| ");
 
                 if (taskInfo.length != 2) {
-                    throw new IOException("Error parsing task data");
+                    System.out.println("Unable to read task " + taskNumber + ". Skipping task");
+                    continue;
                 }
 
                 boolean isDone = false;

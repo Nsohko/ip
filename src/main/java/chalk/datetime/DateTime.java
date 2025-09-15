@@ -58,4 +58,11 @@ public class DateTime implements Storable {
     public Boolean isBefore(DateTime otherDateTime) {
         return this.dateTime.isBefore(otherDateTime.dateTime);
     }
+
+    /**
+     * Returns True if the current DateTime is after the other one
+     */
+    public Boolean isAfter(DateTime otherDateTime) {
+        return this.dateTime.isAfter(otherDateTime.dateTime);
+    }
 }

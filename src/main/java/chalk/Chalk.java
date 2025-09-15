@@ -172,7 +172,7 @@ public class Chalk {
             this.taskList.addTask(newTask);
 
             String message = """
-                Epic!. I've added this task:
+                Epic! I've added this task:
                     %s
                 Now you have %d tasks in the list.
                 """.formatted(newTask.toString(), this.taskList.size());
@@ -248,11 +248,11 @@ public class Chalk {
     /**
      * Searches for tasks whose name constains searchParam
      *
-     * @param searchParam The search parameter to match tasks' names against
+     * @param searchParams The search parameters to match tasks' names against
      */
-    public void searchTasks(String searchParam) {
+    public void searchTasks(String... searchParams) {
 
-        TaskList filteredTaskList = this.taskList.searchTasks(searchParam);
+        TaskList filteredTaskList = this.taskList.searchTasks(searchParams);
 
         String message;
         if (filteredTaskList.size() == 0) {

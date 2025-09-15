@@ -31,7 +31,15 @@ public class FindCommand extends ChalkCommand {
     @Override
     public void execute(Chalk chalk) {
         // skip 5 chars ("find ")
-        String searchParam = this.inputCommand.substring(5);
-        chalk.searchTasks(searchParam);
+        String[] searchParams = this.inputCommand.substring(5).strip().split("\\s+");
+
+        if (searchParams.length == 0) {
+            chalk.printError("""
+                Search parameter cannot be empty!
+                Usage: find [searchParam]
+                """);
+            return;
+        }
+        chalk.searchTasks(searchParams);
     }
 }

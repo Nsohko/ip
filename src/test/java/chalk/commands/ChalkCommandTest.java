@@ -77,17 +77,17 @@ class ChalkCommandParseSimpleTest {
     }
 
     @Test
-    void parse_missingSpaceAfterKeyword_returnsAddCommand() {
-        assertTrue(ChalkCommand.parse("mark") instanceof AddCommand);
-        assertTrue(ChalkCommand.parse("unmark") instanceof AddCommand);
-        assertTrue(ChalkCommand.parse("delete") instanceof AddCommand);
+    void parse_missingSpaceAfterKeyword_returnsCorrectCommand() {
+        assertTrue(ChalkCommand.parse("mark") instanceof MarkDoneCommand);
+        assertTrue(ChalkCommand.parse("unmark") instanceof UnmarkDoneCommand);
+        assertTrue(ChalkCommand.parse("delete") instanceof DeleteCommand);
     }
 
     @Test
-    void parse_whitespaceIssues_returnsAddCommand() {
-        assertTrue(ChalkCommand.parse(" mark") instanceof AddCommand);
-        assertTrue(ChalkCommand.parse("bye ") instanceof AddCommand);
+    void parse_whitespaceIssues_returnsCorrecrCommand() {
+        assertTrue(ChalkCommand.parse(" mark") instanceof MarkDoneCommand);
+        assertTrue(ChalkCommand.parse("bye ") instanceof ExitCommand);
         assertTrue(ChalkCommand.parse("    ") instanceof AddCommand);
-        assertTrue(ChalkCommand.parse("\tlist") instanceof AddCommand);
+        assertTrue(ChalkCommand.parse("\tlist") instanceof ListCommand);
     }
 }

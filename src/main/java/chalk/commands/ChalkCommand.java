@@ -14,16 +14,16 @@ public abstract class ChalkCommand {
     private static final String LIST_TASKS_STRING = "list";
 
     /** Flag for MarkDoneCommand */
-    private static final String MARK_TASK_AS_DONE_STRING = "mark ";
+    private static final String MARK_TASK_AS_DONE_STRING = "mark";
 
     /** Flag for UnmarkDoneCommand */
-    private static final String UNMARK_TASK_AS_DONE_STRING = "unmark ";
+    private static final String UNMARK_TASK_AS_DONE_STRING = "unmark";
 
     /** Flag for DeleteCommand */
-    private static final String DELETE_TASK_STRING = "delete ";
+    private static final String DELETE_TASK_STRING = "delete";
 
     /** Flag for FindCommand */
-    private static final String FIND_TASK_STRING = "find ";
+    private static final String FIND_TASK_STRING = "find";
 
     /**
      * Executes some behaviour of the Chalk object based on the specific command
@@ -39,6 +39,7 @@ public abstract class ChalkCommand {
      */
     public static ChalkCommand parse(String input) {
 
+        input = input.strip();
         if (input.equalsIgnoreCase(END_CONVERSATION_STRING)) {
             return new ExitCommand();
         } else if (input.equalsIgnoreCase(LIST_TASKS_STRING)) {

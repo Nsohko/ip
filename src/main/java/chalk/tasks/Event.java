@@ -1,6 +1,10 @@
 package chalk.tasks;
 
 import java.time.format.DateTimeParseException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import chalk.datetime.DateTime;
 
@@ -61,8 +65,14 @@ public class Event extends Task {
      */
     @Override
     public boolean checkConflict(Task otherTask) {
+
+        // if they are the same task (same name and start/end time), they conflict
+        if (super.checkConflict(otherTask)) {
+            return true;
+        }
+
+        // try casting to Event to check for time conflicts
         if (!(otherTask instanceof Event castedOtherTask)) {
-            // Currently, events can only conflict with other events
             return false;
         }
 
@@ -78,33 +88,59 @@ public class Event extends Task {
      * @throws IllegalArgumentException If the input command string is invalid
      */
     public static Event fromInputCommand(String inputCommand) throws IllegalArgumentException {
-        // skip beginning 6 chars ("event ")
-        String input = inputCommand.substring(6);
 
-        String taskName = input.split(" /")[0].trim();
-
-        // index of the /from and /to commands
-        int fromIndex = input.indexOf(" /from ");
-        int toIndex = input.indexOf(" /to ");
-
-        if (taskName.trim().isEmpty() || fromIndex == -1 || toIndex == -1) {
-            throw new IllegalArgumentException("""
-                    Event task name, start time and end time cannot be empty.
-                    Usage: event [eventName] /from [startTime] /to [endTime]
-                    """);
+        // Remove "event" and following spaces
+        String s = inputCommand.substring(5).stripLeading();
+        if (s.isEmpty()) {
+            throw wrongArgs();
         }
 
-        // skip to fromIndex plus 7 chars (" /from "), then split until next subcommand (denoted by a new " /")
-        String startTimeString = input.substring(fromIndex + 7).split(" /")[0].trim();
+        // Find the first subcommand token (either /from or /to)
+        Pattern token = Pattern.compile("\\s+/(from|to)\\s+");
+        Matcher m = token.matcher(s);
 
-        // skip to toIndex plus 5 chars (" /to "), then split until next subcommand (denoted by a new " /")
-        String endTimeString = input.substring(toIndex + 5).split(" /")[0].trim();
+        String taskName;
+        int firstCmdStart;
+        if (m.find()) {
+            taskName = s.substring(0, m.start()).strip();
+            firstCmdStart = m.start();
+        } else {
+            // No /from or /to present
+            throw wrongArgs();
+        }
+        if (taskName.isEmpty()) {
+            throw wrongArgs();
+        }
 
-        if (startTimeString.trim().isEmpty() || endTimeString.trim().isEmpty()) {
-            throw new IllegalArgumentException("""
-                    Event task name, start time and end time cannot be empty.
-                    Usage: event [eventName] /from [startTime] /to [endTime]
-                    """);
+        // Collect all subcommands in appearance order (supports arbitrary order & spacing)
+        Map<String, String> args = new LinkedHashMap<>();
+        int currStart = m.end();
+        String currKey = m.group(1); // "from" or "to"
+        while (true) {
+            if (m.find()) {
+                // text between previous token end and next token start
+                String value = s.substring(currStart, m.start()).strip();
+                if (!value.isEmpty()) {
+                    args.put(currKey, value);
+                }
+                currKey = m.group(1);
+                currStart = m.end();
+            } else {
+                // last segment to end of string
+                String value = s.substring(currStart).strip();
+                if (!value.isEmpty()) {
+                    args.put(currKey, value);
+                }
+                break;
+            }
+        }
+
+        String startTimeString = args.get("from");
+        String endTimeString = args.get("to");
+
+        if (startTimeString == null || endTimeString == null
+            || startTimeString.isEmpty() || endTimeString.isEmpty()) {
+            throw wrongArgs();
         }
 
         DateTime startTime;
@@ -112,13 +148,39 @@ public class Event extends Task {
         try {
             startTime = new DateTime(startTimeString);
             endTime = new DateTime(endTimeString);
-
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("""
-                Provide event start and end time in the following format:
-                dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
-                """);
+                    Provide event start and end time in the following format:
+                    dd/mm/yyyy HHmm (e.g. 31/10/2025 1800 for 31 October 2025, 6pm)
+                    """);
         }
+
+        if (startTime.isAfter(endTime) || startTime.equals(endTime)) {
+            throw new IllegalArgumentException("Event start time must be before end time!");
+        }
+
         return new Event(taskName, startTime, endTime);
+    }
+
+    private static IllegalArgumentException wrongArgs() {
+        return new IllegalArgumentException("""
+                Event task name, start time and end time cannot be empty.
+                Usage: event [eventName] /from [startTime] /to [endTime]
+                """);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+
+        Event otherEvent = (Event) other;
+        return super.equals(otherEvent)
+                && this.startTime.equals(otherEvent.startTime)
+                && this.endTime.equals(otherEvent.endTime);
     }
 }
