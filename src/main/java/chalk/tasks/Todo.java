@@ -40,7 +40,7 @@ public class Todo extends Task {
      */
     public static Todo fromInputCommand(String inputCommand) throws IllegalArgumentException {
         // skip the beginning 5 chars ("todo")
-        String taskName = inputCommand.substring(4).stripLeading();
+        String taskName = inputCommand.substring(4).strip();
 
         // strip to ensure it isnt just whitespace
         if (taskName.strip().isEmpty()) {

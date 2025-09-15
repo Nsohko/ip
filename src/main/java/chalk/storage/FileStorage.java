@@ -35,8 +35,12 @@ public class FileStorage {
      */
     public TaskList load() throws IOException {
         File storage = new File(this.storagePath);
+
+        File parent = storage.getParentFile();
+        if (parent != null) {
+            parent.mkdirs();
+        }
         if (!storage.exists()) {
-            storage.getParentFile().mkdirs();
             storage.createNewFile();
         }
 
@@ -44,8 +48,15 @@ public class FileStorage {
         TaskList taskList = new TaskList();
 
         try (Scanner s = new Scanner(storage)) {
-            while (s.hasNext()) {
-                String[] taskInfo = s.nextLine().split(" \\| ");
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+                
+                if (line.isBlank()) {
+                    taskNumber++;
+                    continue;
+                }
+                
+                String[] taskInfo = line.split("\\s*\\|\\s*", 2);
 
                 if (taskInfo.length != 2) {
                     System.out.println("Unable to read task " + taskNumber + ". Skipping task");
