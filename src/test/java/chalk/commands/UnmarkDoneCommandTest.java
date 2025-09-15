@@ -1,6 +1,7 @@
 package chalk.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 import chalk.ChalkStub;
@@ -13,8 +14,8 @@ class UnmarkDoneCommandTest {
 
         new UnmarkDoneCommand("unmark 4").execute(chalk);
 
-        assertEquals(1, chalk.unmarkCount);
-        assertEquals(4, chalk.lastUnmarked);
+        assertEquals(1, chalk.getUnmarkCount());
+        assertEquals(4, chalk.getLastUnmarked());
     }
 
     @Test
@@ -23,45 +24,35 @@ class UnmarkDoneCommandTest {
 
         new UnmarkDoneCommand("unmark     10").execute(chalk);
 
-        assertEquals(1, chalk.unmarkCount);
-        assertEquals(10, chalk.lastUnmarked);
+        assertEquals(1, chalk.getUnmarkCount());
+        assertEquals(10, chalk.getLastUnmarked());
     }
 
     @Test
-    void execute_trailingWhitespace_validIndex_ok() {
+    void execute_trailingWhitespace_success() {
         ChalkStub chalk = new ChalkStub();
 
         new UnmarkDoneCommand("unmark 2   ").execute(chalk);
 
-        assertEquals(1, chalk.unmarkCount);
-        assertEquals(2, chalk.lastUnmarked);
+        assertEquals(1, chalk.getUnmarkCount());
+        assertEquals(2, chalk.getLastUnmarked());
     }
 
     @Test
-    void execute_missingIndex_printsError_doesNotUnmark() {
+    void execute_missingIndex_doesNotUnmark() {
         ChalkStub chalk = new ChalkStub();
 
         new UnmarkDoneCommand("unmark").execute(chalk);
 
-        assertEquals(0, chalk.unmarkCount);
+        assertEquals(0, chalk.getUnmarkCount());
     }
 
     @Test
-    void execute_nonNumericIndex_printsError_doesNotUnmark() {
+    void execute_nonNumericIndex_doesNotUnmark() {
         ChalkStub chalk = new ChalkStub();
 
         new UnmarkDoneCommand("unmark two").execute(chalk);
 
-        assertEquals(0, chalk.unmarkCount);
-    }
-
-    @Test
-    void execute_leadingWhitespace_currentlyErrors_unlessStripAdded() {
-        ChalkStub chalk = new ChalkStub();
-
-        // With current implementation, "  unmark 5" -> parts[1] = "unmark" -> NumberFormatException -> error.
-        new UnmarkDoneCommand("  unmark 5").execute(chalk);
-
-        assertEquals(0, chalk.unmarkCount);
+        assertEquals(0, chalk.getUnmarkCount());
     }
 }

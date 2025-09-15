@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ChalkCommandParseTest {
+class ChalkCommandTest {
 
     // --- Exact matches (case-insensitive), no args ---
     @Test
@@ -130,13 +130,13 @@ class ChalkCommandParseTest {
     // --- Whitespace handling via strip() ---
     @Test
     @DisplayName("\" mark\" -> MarkDoneCommand (leading whitespace stripped)")
-    void parse_leadingWhitespace_mark_returnsMarkDone() {
+    void parse_leadingWhitespaceMark_returnsMarkDone() {
         assertTrue(ChalkCommand.parse(" mark") instanceof MarkDoneCommand);
     }
 
     @Test
     @DisplayName("\"bye \" -> ExitCommand (trailing whitespace stripped)")
-    void parse_trailingWhitespace_bye_returnsExit() {
+    void parse_trailingWhitespaceBye_returnsExit() {
         assertTrue(ChalkCommand.parse("bye ") instanceof ExitCommand);
     }
 
@@ -164,25 +164,25 @@ class ChalkCommandParseTest {
     // If you later enforce word boundaries, these expectations will need updating.
     @Test
     @DisplayName("\"marker 1\" -> MarkDoneCommand (prefix match)")
-    void parse_marker_returnsMarkDone_dueToPrefixMatch() {
-        assertTrue(ChalkCommand.parse("marker 1") instanceof MarkDoneCommand);
+    void parse_marker_notReturnsMarkDone() {
+        assertTrue(!(ChalkCommand.parse("marker 1") instanceof MarkDoneCommand));
     }
 
     @Test
     @DisplayName("\"unmarked 2\" -> UnmarkDoneCommand (prefix match)")
-    void parse_unmarked_returnsUnmark_dueToPrefixMatch() {
-        assertTrue(ChalkCommand.parse("unmarked 2") instanceof UnmarkDoneCommand);
+    void parse_unmarked_notReturnsUnmark() {
+        assertTrue(!(ChalkCommand.parse("unmarked 2") instanceof UnmarkDoneCommand));
     }
 
     @Test
     @DisplayName("\"deletee 3\" -> DeleteCommand (prefix match)")
-    void parse_deletee_returnsDelete_dueToPrefixMatch() {
-        assertTrue(ChalkCommand.parse("deletee 3") instanceof DeleteCommand);
+    void parse_deletee_notReturnsDelete() {
+        assertTrue(!(ChalkCommand.parse("deletee 3") instanceof DeleteCommand));
     }
 
     @Test
     @DisplayName("\"finder x\" -> FindCommand (prefix match)")
-    void parse_finder_returnsFind_dueToPrefixMatch() {
-        assertTrue(ChalkCommand.parse("finder x") instanceof FindCommand);
+    void parse_finder_notReturnsFind() {
+        assertTrue(!(ChalkCommand.parse("finder x") instanceof FindCommand));
     }
 }

@@ -105,12 +105,12 @@ public abstract class Task implements Storable {
     public static Task fromInputCommand(String inputCommand) throws IllegalArgumentException {
 
         inputCommand = inputCommand.strip();
-        if (inputCommand.startsWith("todo")) {
+        if (inputCommand.startsWith("todo ")) {
             return Todo.fromInputCommand(inputCommand);
-        } else if (inputCommand.startsWith("deadline")) {
+        } else if (inputCommand.startsWith("deadline ")) {
             return Deadline.fromInputCommand(inputCommand);
 
-        } else if (inputCommand.startsWith("event")) {
+        } else if (inputCommand.startsWith("event ")) {
             return Event.fromInputCommand(inputCommand);
         }
         throw new IllegalArgumentException("Unknown Command: " + inputCommand);

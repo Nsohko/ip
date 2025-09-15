@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 class TodoTest {
@@ -52,8 +53,7 @@ class TodoTest {
     @Test
     void fromInputCommand_emptyName_throwsException() {
         IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
-                () -> Todo.fromInputCommand("todo   ")
+                IllegalArgumentException.class, () -> Todo.fromInputCommand("todo   ")
         );
         assertTrue(ex.getMessage().contains("Todo task name cannot be empty"));
     }

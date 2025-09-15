@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 class TaskTest {
@@ -12,7 +13,7 @@ class TaskTest {
     // ---------- basic state & presentation ----------
 
     @Test
-    void getName_and_getIsDone_defaultsAndUpdates() {
+    void getNamegetIsDone_normalUse_success() {
         Task t = new TaskStub("read book");
         assertEquals("read book", t.getName());
         assertFalse(t.getIsDone());
@@ -98,8 +99,8 @@ class TaskTest {
         Task right = new WeirdRightEqualsTaskStub("Y");
 
         // Default implementation: this.equals(other) || other.equals(this)
-        assertTrue(left.checkConflict(right));   // left.equals(right) is true
-        assertTrue(right.checkConflict(left));   // other.equals(this) triggers left.equals(right) == true
+        assertTrue(left.checkConflict(right)); // left.equals(right) is true
+        assertTrue(right.checkConflict(left)); // other.equals(this) triggers left.equals(right) == true
     }
 
     // ---------- fromInputCommand factory ----------
@@ -134,8 +135,7 @@ class TaskTest {
     @Test
     void fromInputCommand_unknown_throwsWithInputEchoed() {
         IllegalArgumentException ex = assertThrows(
-            IllegalArgumentException.class,
-            () -> Task.fromInputCommand("remind me later")
+            IllegalArgumentException.class, () -> Task.fromInputCommand("remind me later")
         );
         assertTrue(ex.getMessage().startsWith("Unknown Command: "));
         assertTrue(ex.getMessage().contains("remind me later"));

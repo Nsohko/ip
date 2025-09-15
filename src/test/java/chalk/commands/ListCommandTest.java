@@ -1,6 +1,7 @@
 package chalk.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 import chalk.ChalkStub;
@@ -14,7 +15,7 @@ class ListCommandTest {
 
         cmd.execute(chalk);
 
-        assertEquals(1, chalk.listCount, "ListCommand should call chalk.listTasks()");
+        assertEquals(1, chalk.getListCount(), "ListCommand should call chalk.listTasks()");
     }
 
     @Test
@@ -26,6 +27,6 @@ class ListCommandTest {
         cmd.execute(chalk);
         cmd.execute(chalk);
 
-        assertEquals(3, chalk.listCount, "ListCommand should call listTasks() once per execute()");
+        assertEquals(3, chalk.getListCount(), "ListCommand should call listTasks() once per execute()");
     }
 }

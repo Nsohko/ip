@@ -53,7 +53,7 @@ class TextUiTest {
     }
 
     @Test
-    void printError_withMessage_printsErrorHeaderAndMessage() {
+    void printError_withMessageHeaderAndMessage() {
         TextUI ui = new TextUI();
         ui.printError("Something went wrong\nPlease retry");
 

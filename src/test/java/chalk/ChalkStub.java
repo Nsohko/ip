@@ -8,29 +8,37 @@ import chalk.tasks.Task;
  * - Does not override printError (it's final in your code)
  */
 public class ChalkStub extends Chalk {
-    public Task lastAdded;
-    public int addCount = 0;
+    private Task lastAdded;
+    private int addCount = 0;
 
-    public int deleteCount = 0;
-    public int lastDeleted;
+    private int deleteCount = 0;
+    private int lastDeleted;
 
-    public boolean terminated = false;
+    private boolean terminated = false;
 
-    public int searchCount = 0;
-    public String[] lastSearchParams;
+    private int searchCount = 0;
+    private String[] lastSearchParams;
 
-    public int listCount = 0;
+    private int listCount = 0;
 
-    public int markCount = 0;
-    public int lastMarked;
+    private int markCount = 0;
+    private int lastMarked;
 
-    public int unmarkCount = 0;
-    public int lastUnmarked;
+    private int unmarkCount = 0;
+    private int lastUnmarked;
 
     @Override
     public void addTask(Task task) {
         this.lastAdded = task;
         this.addCount++;
+    }
+
+    public int getAddCount() {
+        return this.addCount;
+    }
+
+    public Task getLastAdded() {
+        return this.lastAdded;
     }
 
     @Override
@@ -39,21 +47,44 @@ public class ChalkStub extends Chalk {
         this.lastDeleted = taskNumber;
     }
 
+    public int getLastDeleted() {
+        return this.lastDeleted;
+    }
+
+    public int getDeleteCount() {
+        return this.deleteCount;
+    }
+
     @Override
     public void terminate() {
         this.terminated = true;
+    }
+
+    public boolean isTerminated() {
+        return this.terminated;
     }
 
     @Override
     public void searchTasks(String[] params) {
         this.searchCount++;
         this.lastSearchParams = params;
-        
+    }
+
+    public int getSearchCount() {
+        return this.searchCount;
+    }
+
+    public String[] getLastSearchParams() {
+        return this.lastSearchParams;
     }
 
     @Override
     public void listTasks() {
         this.listCount++;
+    }
+
+    public int getListCount() {
+        return this.listCount;
     }
 
     @Override
@@ -62,9 +93,25 @@ public class ChalkStub extends Chalk {
         this.lastMarked = taskNumber;
     }
 
+    public int getMarkCount() {
+        return this.markCount;
+    }
+
+    public int getLastMarked() {
+        return this.lastMarked;
+    }
+
     @Override
     public void unmarkTaskAsDone(int taskNumber) {
         this.unmarkCount++;
         this.lastUnmarked = taskNumber;
+    }
+
+    public int getUnmarkCount() {
+        return this.unmarkCount;
+    }
+
+    public int getLastUnmarked() {
+        return this.lastUnmarked;
     }
 }

@@ -3,6 +3,7 @@ package chalk.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import chalk.ChalkStub;
@@ -25,9 +26,9 @@ class AddCommandTest {
 
         new AddCommand(input).execute(chalk);
 
-        assertEquals(1, chalk.addCount, "Should add one task");
-        assertNotNull(chalk.lastAdded, "Added task should not be null");
-        assertEquals("buy milk", chalk.lastAdded.getName());
+        assertEquals(1, chalk.getAddCount(), "Should add one task");
+        assertNotNull(chalk.getLastAdded(), "Added task should not be null");
+        assertEquals("buy milk", chalk.getLastAdded().getName());
     }
 
     @Test
@@ -37,9 +38,9 @@ class AddCommandTest {
 
         new AddCommand(input).execute(chalk);
 
-        assertEquals(1, chalk.addCount);
-        assertTrue(chalk.lastAdded instanceof Deadline, "Should parse into Deadline");
-        assertEquals("return book", chalk.lastAdded.getName());
+        assertEquals(1, chalk.getAddCount());
+        assertTrue(chalk.getLastAdded() instanceof Deadline, "Should parse into Deadline");
+        assertEquals("return book", chalk.getLastAdded().getName());
     }
 
     @Test
@@ -49,34 +50,34 @@ class AddCommandTest {
 
         new AddCommand(input).execute(chalk);
 
-        assertEquals(1, chalk.addCount);
-        assertTrue(chalk.lastAdded instanceof Event, "Should parse into Event");
-        assertEquals("project meeting", chalk.lastAdded.getName());
+        assertEquals(1, chalk.getAddCount());
+        assertTrue(chalk.getLastAdded() instanceof Event, "Should parse into Event");
+        assertEquals("project meeting", chalk.getLastAdded().getName());
     }
 
     @Test
-    void execute_invalidDeadlineFormat_doesNotAddTask_printsError() {
+    void execute_invalidDeadlineFormat_doesNotAddTask() {
         ChalkStub chalk = new ChalkStub();
         // Missing "/by " delimiter; Task.fromInputCommand should throw IllegalArgumentException
         String input = "deadline return book 6/6/2025 1820";
 
         new AddCommand(input).execute(chalk);
 
-        assertEquals(0, chalk.addCount, "Invalid input should not add any task");
+        assertEquals(0, chalk.getAddCount(), "Invalid input should not add any task");
     }
 
     @Test
-    void execute_emptyAfterStrip_doesNotAddTask_printsError() {
+    void execute_emptyAfterStrip_doesNotAddTask() {
         ChalkStub chalk = new ChalkStub();
         String input = "   ";
 
         new AddCommand(input).execute(chalk);
 
-        assertEquals(0, chalk.addCount);
+        assertEquals(0, chalk.getAddCount());
     }
 
     @Test
-    void execute_unknownKeyword_treatedAsTodo_addsTaskWithWholeInputName() {
+    void execute_todo_addsTaskWithWholeInputName() {
         ChalkStub chalk = new ChalkStub();
         // By design, parser sends non-keywords to AddCommand; Task.fromInputCommand
         // should treat this as a todo with the entire string as the name (depending on your Task parser).
@@ -84,8 +85,8 @@ class AddCommandTest {
 
         new AddCommand(input).execute(chalk);
 
-        assertEquals(1, chalk.addCount);
-        Task added = chalk.lastAdded;
+        assertEquals(1, chalk.getAddCount());
+        Task added = chalk.getLastAdded();
         assertNotNull(added);
         // Depending on your Task.fromInputCommand rules, adjust this assertion:
         assertEquals("buy eggs and bread", added.getName());

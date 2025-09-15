@@ -44,13 +44,15 @@ public abstract class ChalkCommand {
             return new ExitCommand();
         } else if (input.equalsIgnoreCase(LIST_TASKS_STRING)) {
             return new ListCommand();
-        } else if (input.toLowerCase().startsWith(MARK_TASK_AS_DONE_STRING)) {
+        } else if (input.equals(MARK_TASK_AS_DONE_STRING)
+                || input.toLowerCase().startsWith(MARK_TASK_AS_DONE_STRING + " ")) {
             return new MarkDoneCommand(input);
-        } else if (input.toLowerCase().startsWith(UNMARK_TASK_AS_DONE_STRING)) {
+        } else if (input.equals(UNMARK_TASK_AS_DONE_STRING)
+                || input.toLowerCase().startsWith(UNMARK_TASK_AS_DONE_STRING + " ")) {
             return new UnmarkDoneCommand(input);
-        } else if (input.toLowerCase().startsWith(DELETE_TASK_STRING)) {
+        } else if (input.equals(DELETE_TASK_STRING) || input.toLowerCase().startsWith(DELETE_TASK_STRING + " ")) {
             return new DeleteCommand(input);
-        } else if (input.toLowerCase().startsWith(FIND_TASK_STRING)) {
+        } else if (input.equals(FIND_TASK_STRING) || input.toLowerCase().startsWith(FIND_TASK_STRING + " ")) {
             return new FindCommand(input);
         } else {
             return new AddCommand(input);

@@ -50,12 +50,11 @@ public class FileStorage {
         try (Scanner s = new Scanner(storage)) {
             while (s.hasNextLine()) {
                 String line = s.nextLine();
-                
                 if (line.isBlank()) {
                     taskNumber++;
                     continue;
                 }
-                
+
                 String[] taskInfo = line.split("\\s*\\|\\s*", 2);
 
                 if (taskInfo.length != 2) {

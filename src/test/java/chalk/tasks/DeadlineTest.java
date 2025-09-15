@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -63,7 +64,7 @@ class DeadlineTest {
         }
 
         @Test
-        void equals_symmetric_and_transitive() {
+        void equals_symmetricAndTransitive() {
             DateTimeStub dt = new DateTimeStub("01/01/2025 0000", "1 Jan 2025 0000hrs");
             Deadline a = new Deadline("a", dt);
             Deadline b = new Deadline("a", new DateTimeStub("01/01/2025 0000", "1 Jan 2025 0000hrs"));
@@ -141,8 +142,8 @@ class DeadlineTest {
         @Test
         void fromInputCommand_error_missingByDelimiter() {
             IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
-                () -> Deadline.fromInputCommand("deadline return book by 6/6/2025 1820") // missing "/by"
+                IllegalArgumentException.class, ()
+                    -> Deadline.fromInputCommand("deadline return book by 6/6/2025 1820") // missing "/by"
             );
             String msg = ex.getMessage();
             assertTrue(msg.contains("Usage: deadline [taskName] /by [dueDate]"));
@@ -151,8 +152,8 @@ class DeadlineTest {
         @Test
         void fromInputCommand_error_emptyTaskName() {
             IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
-                () -> Deadline.fromInputCommand("deadline   /by 6/6/2025 1820")
+                IllegalArgumentException.class, ()
+                    -> Deadline.fromInputCommand("deadline   /by 6/6/2025 1820")
             );
             assertTrue(ex.getMessage().contains("cannot be empty"));
         }
@@ -160,8 +161,8 @@ class DeadlineTest {
         @Test
         void fromInputCommand_error_emptyDueDate() {
             IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
-                () -> Deadline.fromInputCommand("deadline return book /by   ")
+                IllegalArgumentException.class, ()
+                    -> Deadline.fromInputCommand("deadline return book /by   ")
             );
             assertTrue(ex.getMessage().contains("cannot be empty"));
         }
@@ -169,8 +170,8 @@ class DeadlineTest {
         @Test
         void fromInputCommand_error_badDateFormat() {
             IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
-                () -> Deadline.fromInputCommand("deadline return book /by 2025-06-06 18:20") // wrong format
+                IllegalArgumentException.class, ()
+                    -> Deadline.fromInputCommand("deadline return book /by 2025-06-06 18:20") // wrong format
             );
             assertTrue(ex.getMessage().contains("dd/mm/yyyy HHmm"));
         }

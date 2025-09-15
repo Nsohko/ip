@@ -1,6 +1,7 @@
 package chalk.commands;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import chalk.ChalkStub;
@@ -14,7 +15,7 @@ class ExitCommandTest {
 
         cmd.execute(chalk);
 
-        assertTrue(chalk.terminated, "ExitCommand should call chalk.terminate()");
+        assertTrue(chalk.isTerminated(), "ExitCommand should call chalk.terminate()");
     }
 
     @Test

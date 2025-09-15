@@ -1,11 +1,12 @@
 package chalk.tasks;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -222,7 +223,7 @@ class TaskListTest {
     }
 
     @Test
-    void checkConflict_none_found_returnsEmpty() {
+    void checkConflict_noneFound_returnsEmpty() {
         TaskList list = new TaskList();
         list.addTask(new TaskStub("a"));
         list.addTask(new TaskStub("b"));

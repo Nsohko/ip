@@ -5,7 +5,9 @@ package chalk.tasks;
  * Left.equals(Right) returns true; everything else false.
  */
 class WeirdLeftEqualsTaskStub extends Task {
-    WeirdLeftEqualsTaskStub(String name) { super(name); }
+    WeirdLeftEqualsTaskStub(String name) {
+        super(name);
+    }
 
     @Override
     public boolean equals(Object other) {
