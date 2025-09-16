@@ -28,7 +28,7 @@ public class DateTime implements Storable {
      */
     public DateTime(String input) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/uuuu HHmm")
-            .withResolverStyle(ResolverStyle.STRICT);;
+            .withResolverStyle(ResolverStyle.STRICT);
         LocalDateTime parsedDateTime = LocalDateTime.parse(input, formatter);
 
         this.dateTime = parsedDateTime;

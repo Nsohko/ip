@@ -146,6 +146,11 @@ public class Chalk {
      * Lists all tasks stored inside the task list
      */
     public void listTasks() {
+
+        if (this.taskList.size() == 0) {
+            this.printReply("You have no tasks in your list!");
+            return;
+        }
         this.printReply(this.taskList.toString());
     }
 
