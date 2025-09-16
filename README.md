@@ -1,4 +1,3 @@
-
 # Chalk User Guide
 
 Chalk is a desktop application for managing tasks, optimized for use via a Command Line Interface (CLI) while still offering the benefits of a Graphical User Interface (GUI). If you can type fast, Chalk will help you complete your daily tasks quicker than traditional apps.
@@ -35,7 +34,7 @@ All dates should be provided in the following format: d/M/uuuu HHmm (e.g. 31/10/
 
 Tasks of different types can be added via their corresponding commands:
 
-1. Todo
+#### 1. Todo
 
 Todos are basic tasks which have no due date or duration. They can be added via the ```todo``` command.
 ```
@@ -46,7 +45,7 @@ For example, to create a todo called ```buy milk```
 todo buy milk
 ```
 
-2. Deadline
+#### 2. Deadline
 
 Deadlines are tasks which have a due-by date. They can be created via the ```deadline``` command, and passsing in a ```/by``` parameter to specify the deadline.
 ```
@@ -57,7 +56,7 @@ For example, to create a deadline called ```submit project``` due on ```20 Sep 2
 deadline submit project /by 20/9/2024 1900 
 ```
 
-3. Event 
+#### 3. Event 
 
 Events are tasked which have a specific start and end time. They can be created via the ```event``` command, and passing in a ```/from``` and ```/to``` parameter to specificy the start and end time respectively.
 ```
